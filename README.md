@@ -49,4 +49,95 @@ BFS — это алгоритм обхода графа, который начи
 **8. Floid**
 
 Алгоритм Флойда – простое решение APSP с помощью динамического программирования, позволяет решать данную задачу для графов с целыми весами на ребрах
-S
+
+# Архитектура библиотеки и экспериментальной среды 
+
+## Введение
+
+Данная библиотека предназначена для реализации различных алгоритмов поиска кратчайшего пути с учетом стоимости, таких как алгоритмы Дейкстры, A и другие. Экспериментальная среда будет позволять тестировать и сравнивать производительность этих алгоритмов на различных данных.
+
+## Структура библиотеки
+
+### 1. Основные компоненты
+
+- Graph: Класс для представления графа.
+- GraphAlgorithm: Абстрактный базовый класс для алгоритмов поиска кратчайшего пути.
+- DijkstraAlgorithm: Реализация алгоритма Дейкстры.
+- AStarAlgorithm: Реализация алгоритма A.
+- Аналогично с другими алгоритмами
+- Utility: Вспомогательные функции, такие как считывание графа из файла.
+
+### 2. Классы и их ответственность
+
+#### 2.1 Graph
+```
+class Graph {
+public:
+    void addEdge(int source, int destination, T weight);
+    std::vector<int> getNeighbors(int vertex);
+    T getWeight(int source, int destination);
+    // Другие необходимые методы
+};
+```
+
+#### 2.2 GraphAlgorithm
+```
+class GraphAlgorithm {
+public:
+    virtual std::vector<int> findShortestPath(Graph& graph, int start, int end) = 0;
+};
+```
+
+#### 2.3 DijkstraAlgorithm
+```
+class DijkstraAlgorithm : public GraphAlgorithm {
+public:
+    std::vector<int> findShortestPath(Graph& graph, int start, int end) override;
+};
+```
+
+#### 2.4 AStarAlgorithm
+```
+class AStarAlgorithm : public GraphAlgorithm {
+public:
+    std::vector<int> findShortestPath(Graph& graph, int start, int end) override;
+};
+```
+
+#### 2.5 Utility
+```
+namespace Utility {
+    Graph FromFile(const std::string& filename);
+    void printPath(const std::vector<int>& path);
+    // Другие вспомогательные функции
+}
+```
+
+## Экспериментальная среда
+
+### 1. Цели экспериментальной среды
+
+- Сравнение производительности различных алгоритмов.
+- Анализ сложности в зависимости от структуры графа.
+- Визуализация результатов.
+
+### 2. Структура экспериментальной среды
+
+#### 2.1 Main Class
+```
+class Experiment {
+public:
+    void runExperiment(Graph& graph);
+    void compareAlgorithms(Graph& graph);
+    void visualizeResults();
+    // Другие методы для проведения экспериментов
+};
+```
+
+#### 2.2 Параметры эксперимента
+
+- Тип графа (смешанный, ориентированный, взвешенный).
+- Размер графа.
+- Параметры алгоритмов (например, использование приоритетной очереди).
+
+
