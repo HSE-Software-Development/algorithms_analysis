@@ -10,7 +10,7 @@
 | :-: | :-: | :-: |
 |SSSP + ацикличность|DFS|O(V + E)|
 |SSSP + w<sub>e</sub> =k ∊ N|BFS + queue|O(k(V + E))|
-|SSSP + w<sub>e</sub> =k ∊ N0|BFS + deque|O(V + E)|
+|SSSP + w<sub>e</sub> =k ∊ N<sub>0</sub>|BFS + deque|O(V + E)|
 |SSSP + w<sub>e</sub> ≥ 0|Dijkstra|O(V<sup>2</sup> + E)|
 |SSSP + w<sub>e</sub> ≥ 0|Dijkstra + fib-heap|O(VlogV + E)|
 |SSSP + w<sub>e</sub> ≥ 0|A\*|O(V<sup>2</sup> + E)|
