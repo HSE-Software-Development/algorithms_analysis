@@ -8,8 +8,7 @@
 // Graph node class
 template <typename T> class GeneralNode {
 private:
-  std::vector<GeneralNode<T> *> neighbors; // Node neighbors vector
-  size_t edgeIndex; // Index of the edge this node is from
+  std::vector<std::pair<GeneralNode<T> *, size_t>> neighbors; // Node neighbors vector
   T value;          // Value of the node
 
 public:
@@ -19,23 +18,18 @@ public:
   /// @brief Class constructor
   /// @param edgeIndex_ new index of the edge this node is from
   /// @param value_ new value of the node
-  GeneralNode(size_t edgeIndex_, T value_) {
-    edgeIndex = edgeIndex_;
+  GeneralNode(T value_) {
     value = value_;
     neighbors.reserve(16);
   }
 
   /// @brief Getter of the all node's neighbors
   /// @return const link to the node's neighbors vector
-  const std::vector<GeneralNode<T> *> &getNeighbours() { return neighbors; }
-
-  /// @brief Getter of the index of the edge this node is from
-  /// @return Index of the edge this node is from
-  size_t getEdgeIndex() { return edgeIndex; }
+  const std::vector<std::pair<GeneralNode<T> *, size_t>> &getNeighbours() const { return neighbors; }
 
   /// @brief Getter of the node's value
   /// @return Value of the node
-  T getValue() { return value; }
+  T getValue() const { return value; }
 
   /// @brief Setter of the node's value
   /// @param value_ new value of the node
@@ -43,8 +37,9 @@ public:
 
   /// @brief Add neighbour to the node
   /// @param neighbour new node's neighbour
-  void addNeighbour(const GeneralNode<T> *neighbour) {
-    neighbors.emplace_back(neighbour);
+  /// @param edgeIndex index of the edge between the node and its neighbour
+  void addNeighbour(const GeneralNode<T> *neighbour, size_t edgeIndex) {
+    neighbors.emplace_back((neighbour, edgeIndex));
   }
 
   /// @brief Class destructor
@@ -72,15 +67,15 @@ public:
 
   /// @brief Getter of the edge's weight
   /// @return Weight of the edge
-  T getWeight() { return weight; }
+  T getWeight() const { return weight; }
 
   /// @brief Getter of the edge's start node index
   /// @return Start node index of the edge
-  size_t getStart() { return start; }
+  size_t getStart() const { return start; }
 
   /// @brief Getter of the edge's end node index
   /// @return End node index of the edge
-  size_t getEnd() { return end; }
+  size_t getEnd() const { return end; }
 
   /// @brief Setter of the edge's weight
   /// @param weight_ new weight of the edge
@@ -108,7 +103,7 @@ public:
   /// @brief Getter of graph's edge by its index
   /// @param index index of the grap's edge
   /// @return Non-owning pointer to the edge in the graph
-  const GeneralNode<K> *getEdge(size_t index) {
+  const GeneralEdge<T> *getEdge(size_t index) const {
     if (index >= edges.size()) {
       return nullptr;
     }
@@ -118,7 +113,7 @@ public:
   /// @brief Getter of graph's node by its index
   /// @param index index of the grap's node
   /// @return Non-owning pointer to the node in the graph
-  const GeneralNode<K> *getNode(size_t index) {
+  const GeneralNode<K> *getNode(size_t index) const {
     if (index >= nodes.size()) {
       return nullptr;
     }
@@ -127,7 +122,7 @@ public:
 
   /// @brief Get graph's size
   /// @return size of the graph
-  size_t getSize() { return nodes.size(); }
+  size_t getSize() const { return nodes.size(); }
 
   /// @brief Class destrutor
   ~Graph() {}

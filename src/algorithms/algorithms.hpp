@@ -6,7 +6,7 @@
 #include "../graph/graph.hpp"
 
 #define inf                                                                    \
-  1 >> 32 // Infinity value for all algorithms (Is it bad due to templates
+  1ul >> 32 // Infinity value for all algorithms (Is it bad due to templates
           // architecture?)
 
 namespace algorithms {
@@ -16,9 +16,9 @@ namespace algorithms {
 /// @param g graph itself
 /// @param distances vector of distances from start point to all others
 template <typename T>
-void FordBellman(size_t startIndex, const Graph<T, size_t> &g,
+void FordBellman(size_t startIndex, Graph<T, size_t> &g,
                  std::vector<T> &distances) {
-  std::fill(distances.begin, distances.end, inf);
+  std::fill(distances.begin(), distances.end(), inf);
   distances[startIndex] = 0;
   std::queue<size_t> q;
   std::vector<int> inQueue(g.getSize(), 0);
@@ -29,11 +29,12 @@ void FordBellman(size_t startIndex, const Graph<T, size_t> &g,
     size_t v = q.front();
     q.pop();
     inQueue[v] = 0;
-    GeneralNode<size_t> node = g.getNode(v);
-    for (auto neighbour : node.getNeighbours()) {
+    auto node = g.getNode(v);
+    for (auto [neighbour, edgeIndex] : node->getNeighbours()) {
       size_t x = neighbour->getValue();
-      if (distances[x] == inf || distances[x] < distances[v]) {
-        distances[v] = distances[x];
+      auto w = g.getEdge(edgeIndex)->getWeight();
+      if (distances[x] == inf || distances[x] + w < distances[v]) {
+        distances[v] = distances[x] + w;
         if (!inQueue[v]) {
           inQueue[v] = 1;
           q.push(v);
