@@ -10,9 +10,10 @@ jobs:
       - name: Installing cmake...
         run: sudo apt install cmake
       - name: Building...
-        run: mkdir build && |
-          cd build && |
-          cmake ../src |
+        run: |
+          mkdir build && cd build
+          cd build
+          cmake ../src
           cmake --build .
 
       
