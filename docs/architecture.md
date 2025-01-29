@@ -14,7 +14,7 @@
 - algorithms: namespace с функциями различных алгоритмов
   - FordBellman: Реализация алгоритма Форда-Беллмана.
   
-### 2. Классы и их ответственность
+### 2. Классы, их поля и формат заголовков алгоритмов
 
 #### 2.1 GeneralGraph
 ```
@@ -69,19 +69,44 @@ void FordBellman(size_t startIndex, GeneralGraph<T, size_t> *g,
 
 - Сравнение производительности различных алгоритмов.
 - Анализ сложности в зависимости от структуры графа.
-- Визуализация результатов.
 
 ### 2. Структура экспериментальной среды
+- Task: Виртуальный класс задачи
+  - SSSP: Наследник Task. Окружение тестирования задачи SSSP на разных алгоритмах
+  - APSP: Наследник Task. Окружение тестирования задачи APSP
 
-#### 2.1 Main Class
+#### 2.1 class Task
 ```
-class Experiment {
+class Task {
+  public:
+    /// @brief Run task method
+    virtual void run(int logLevel) = 0;
+
+    /// @brief Class destructor
+    virtual ~Task() = default;
+}; // End of class 'Task'
+```
+
+##### 2.1.1 class SSSP
+```
+template <typename T, typename K> class SSSP : public Task {
 public:
-    void runExperiment(GeneralGraph& graph);
-    void compareAlgorithms(GeneralGraph& graph);
-    void visualizeResults();
-    // Другие методы для проведения экспериментов
-};
+    SSSP(const std::vector<GeneralGraph<T, K> *> &graphs_, const std::vector<size_t> &startNodeIndexes_,
+         const std::function<void(size_t, GeneralGraph<T, K> *, std::vector<T> &)> &algorithm_);
+         
+    void run(int logLevel = 1) override;     
+}
+```
+
+##### 2.1.2 class APSP
+```
+template <typename T, typename K> class APSP : public Task {
+public:
+    APSP(const std::vector<GeneralGraph<T, K> *> &graphs_,
+         std::function<void(const GeneralGraph<T, K> *, std::vector<std::vector<T>> &)> algorithm_) {
+         
+    void run(int logLevel = 1) override;     
+}
 ```
 
 #### 2.2 Параметры эксперимента
