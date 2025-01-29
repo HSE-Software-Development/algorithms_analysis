@@ -12,7 +12,6 @@ jobs:
       - name: Building...
         run: |
           mkdir build && cd build
-          cd build
           cmake ../src
           cmake --build .
 
