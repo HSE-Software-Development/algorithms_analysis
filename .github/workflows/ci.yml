@@ -15,6 +15,10 @@ jobs:
           cmake ../src
           cmake --build .
       - name: Testing...
-        run: ./AlgorithmTests
+        run: |
+          mkdir build && cd build
+          cmake ../src
+          cmake --build .
+          ./AlgorithmTests
 
       
