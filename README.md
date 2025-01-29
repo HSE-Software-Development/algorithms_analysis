@@ -60,7 +60,7 @@ BFS — это алгоритм обхода графа, который начи
 
 ### 1. Основные компоненты
 
-- Graph: Класс для представления графа.
+- GeneralGraph: Класс для представления графа.
 - GraphAlgorithm: Абстрактный базовый класс для алгоритмов поиска кратчайшего пути.
 - DijkstraAlgorithm: Реализация алгоритма Дейкстры.
 - AStarAlgorithm: Реализация алгоритма A.
@@ -69,9 +69,9 @@ BFS — это алгоритм обхода графа, который начи
 
 ### 2. Классы и их ответственность
 
-#### 2.1 Graph
+#### 2.1 GeneralGraph
 ```
-class Graph {
+class GeneralGraph {
 public:
     void addEdge(int source, int destination, T weight);
     std::vector<int> getNeighbors(int vertex);
@@ -84,7 +84,7 @@ public:
 ```
 class GraphAlgorithm {
 public:
-    virtual std::vector<int> findShortestPath(Graph& graph, int start, int end) = 0;
+    virtual std::vector<int> findShortestPath(GeneralGraph& graph, int start, int end) = 0;
 };
 ```
 
@@ -92,7 +92,7 @@ public:
 ```
 class DijkstraAlgorithm : public GraphAlgorithm {
 public:
-    std::vector<int> findShortestPath(Graph& graph, int start, int end) override;
+    std::vector<int> findShortestPath(GeneralGraph& graph, int start, int end) override;
 };
 ```
 
@@ -100,14 +100,14 @@ public:
 ```
 class AStarAlgorithm : public GraphAlgorithm {
 public:
-    std::vector<int> findShortestPath(Graph& graph, int start, int end) override;
+    std::vector<int> findShortestPath(GeneralGraph& graph, int start, int end) override;
 };
 ```
 
 #### 2.5 Utility
 ```
 namespace Utility {
-    Graph FromFile(const std::string& filename);
+    GeneralGraph FromFile(const std::string& filename);
     void printPath(const std::vector<int>& path);
     // Другие вспомогательные функции
 }
@@ -127,8 +127,8 @@ namespace Utility {
 ```
 class Experiment {
 public:
-    void runExperiment(Graph& graph);
-    void compareAlgorithms(Graph& graph);
+    void runExperiment(GeneralGraph& graph);
+    void compareAlgorithms(GeneralGraph& graph);
     void visualizeResults();
     // Другие методы для проведения экспериментов
 };

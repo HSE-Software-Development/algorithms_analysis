@@ -9,32 +9,32 @@
 class Task {
   public:
     /// @brief Run task method
-    virtual void run() = 0;
+    virtual void run(int logLevel) = 0;
 
     /// @brief Class destructor
-    virtual ~Task();
+    virtual ~Task() = default;
 }; // End of class 'Task'
 
 // SSSP task class
 template <typename T, typename K> class SSSP : public Task {
   private:
-    std::vector<Graph<T, K> *>
-        graphs; // Non-owning pointer to the graph for the task
+    std::vector<std::unique_ptr<GeneralGraph<T, K>>>
+        graphs; // Non-owning pointer to the graph  for the task
     std::vector<size_t> startNodeIndexes; // Start node index for the task
     std::vector<std::vector<T>>
         distances; // Distances from the start node to all others
-    std::function<void(size_t, const Graph<T, size_t> &, std::vector<T> &)>
+    std::function<void(size_t, GeneralGraph<T, size_t> *, std::vector<T> &)>
         algorithm; // Algorithm for the task
 
   public:
-    /// @brief Class construnctor
+    /// @brief Class constructor
     /// @param filePath path to the file with graph data (if it is empty
     /// std::cin will be used
     /// @param startNodeIndex_ start node index in the graph
     /// @param algorithm algorithm function instance
     SSSP(std::vector<std::string> filePaths,
          std::vector<size_t> startNodeIndexes_,
-         const std::function<void(size_t, const Graph<T, size_t> &,
+         const std::function<void(size_t, GeneralGraph<T, size_t> *,
                                   std::vector<T> &)> &algorithm_) {
         bool is_ok = !filePaths.empty() && !startNodeIndexes_.empty() &&
                      filePaths.size() == startNodeIndexes_.size();
@@ -48,11 +48,11 @@ template <typename T, typename K> class SSSP : public Task {
 
                 if (filePath.empty()) {
                     graphs.emplace_back(
-                        std::make_unique<Graph<T, K>>(std::cin));
+                        std::make_unique<GeneralGraph<T, K>>(std::cin));
                     std::cin >> startNodeIndex;
                 } else {
                     graphs.emplace_back(
-                        std::make_unique<Graph<T, K>>(filePath));
+                        std::make_unique<GeneralGraph<T, K>>(filePath));
                 }
                 startNodeIndexes.emplace_back(startNodeIndex);
             }
@@ -60,20 +60,25 @@ template <typename T, typename K> class SSSP : public Task {
     }
 
     /// @brief Executor of the task
-    void run(int logLevel = 1) { switch (log) }
+    void run(int logLevel) override {
+        std::cout << "abc" << std::endl;
+        algorithm(startNodeIndexes[0], graphs[0].get(), distances[0]);
+        std::cout << distances[0][0] << std::endl;
+        // switch (log)
+    }
 
     /// @brief Class destructor
-    ~SSSP() {}
+    ~SSSP() = default;
 }; // End of class 'SSSP'
 
 // APSP task class
 template <typename T, typename K> class APSP : public Task {
   private:
-    std::vector<Graph<T, K> *>
+    std::vector<GeneralGraph<T, K> *>
         graphs; // Non-owning pointer to the graph for the task
     std::vector<std::vector<std::vector<T>>>
         distances; // Distances from any node to any others
-    std::function<void(const Graph<T, size_t> &, std::vector<std::vector<T>> &)>
+    std::function<void(const GeneralGraph<T, size_t> *, std::vector<std::vector<T>> &)>
         algorithm; // Algorithm for the task
 
   public:
@@ -82,7 +87,7 @@ template <typename T, typename K> class APSP : public Task {
     /// std::cin will be used)
     /// @param algorithm algorithm function instance
     APSP(std::vector<std::string> filePaths,
-         std::function<void(const Graph<T, size_t> &,
+         std::function<void(const GeneralGraph<T, size_t> *,
                             std::vector<std::vector<T>> &)>
              algorithm_) {
         bool is_ok = !filePaths.empty();
@@ -95,20 +100,20 @@ template <typename T, typename K> class APSP : public Task {
 
                 if (filePath.empty()) {
                     graphs.emplace_back(
-                        std::make_unique<Graph<T, K>>(std::cin));
+                        std::make_unique<GeneralGraph<T, K>>(std::cin));
                 } else {
                     graphs.emplace_back(
-                        std::make_unique<Graph<T, K>>(filePath));
+                        std::make_unique<GeneralGraph<T, K>>(filePath));
                 }
             }
         }
     }
 
     /// @brief Executor of the task
-    void run(int logLevel = 1) {}
+    void run(int logLeve) override {}
 
     /// @brief Class destructor
-    ~APSP() {}
+    ~APSP() = default;
 };
 
 #endif // TASKS_HPP

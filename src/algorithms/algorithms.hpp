@@ -16,12 +16,15 @@ namespace algorithms {
 /// @param g graph itself
 /// @param distances vector of distances from start point to all others
 template <typename T>
-void FordBellman(size_t startIndex, Graph<T, size_t> &g,
+void FordBellman(size_t startIndex, GeneralGraph<T, size_t> *g,
                  std::vector<T> &distances) {
+    auto size = g->getSize();
+//    distances.resize(size);
+    distances.resize(4);
     std::fill(distances.begin(), distances.end(), inf);
     distances[startIndex] = 0;
     std::queue<size_t> q;
-    std::vector<int> inQueue(g.getSize(), 0);
+    std::vector<int> inQueue(g->getSize(), 0);
     inQueue[startIndex] = 1;
     q.push(startIndex);
 
@@ -29,10 +32,10 @@ void FordBellman(size_t startIndex, Graph<T, size_t> &g,
         size_t v = q.front();
         q.pop();
         inQueue[v] = 0;
-        auto node = g.getNode(v);
+        auto node = g->getNode(v);
         for (auto [neighbour, edgeIndex] : node->getNeighbours()) {
             size_t x = neighbour->getValue();
-            auto w = g.getEdge(edgeIndex)->getWeight();
+            auto w = g->getEdge(edgeIndex)->getWeight();
             if (distances[x] == inf || distances[x] + w < distances[v]) {
                 distances[v] = distances[x] + w;
                 if (!inQueue[v]) {
