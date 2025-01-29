@@ -32,8 +32,12 @@ public:
   /// will be used
   /// @param startNodeIndex_ start node index in the graph
   /// @param algorithm algorithm function instance
-  SSSP(std::vector<std::string> filePaths, std::vector<size_t> startNodeIndexes_, const std::function<void(size_t, const Graph<T, size_t> &, std::vector<T> &)> &algorithm_) {
-    bool is_ok = !filePaths.empty() && !startNodeIndexes_.empty() && filePaths.size() == startNodeIndexes_.size();
+  SSSP(std::vector<std::string> filePaths,
+       std::vector<size_t> startNodeIndexes_,
+       const std::function<void(size_t, const Graph<T, size_t> &,
+                                std::vector<T> &)> &algorithm_) {
+    bool is_ok = !filePaths.empty() && !startNodeIndexes_.empty() &&
+                 filePaths.size() == startNodeIndexes_.size();
     if (is_ok) {
       algorithm = algorithm_;
       auto size = filePaths.size();
@@ -54,9 +58,7 @@ public:
   }
 
   /// @brief Executor of the task
-  void run(int logLevel = 1) {
-    switch (log)
-  }
+  void run(int logLevel = 1) { switch (log) }
 
   /// @brief Class destructor
   ~SSSP() {}
@@ -77,8 +79,10 @@ public:
   /// @param filePath path to the file with graph data (if it is empty std::cin
   /// will be used)
   /// @param algorithm algorithm function instance
-  APSP(std::vector<std::string> filePaths, std::function<void(const Graph<T, size_t> &, std::vector<std::vector<T>> &)>
-      algorithm_) {
+  APSP(std::vector<std::string> filePaths,
+       std::function<void(const Graph<T, size_t> &,
+                          std::vector<std::vector<T>> &)>
+           algorithm_) {
     bool is_ok = !filePaths.empty();
     if (is_ok) {
       algorithm = algorithm_;
@@ -86,7 +90,7 @@ public:
 
       for (size_t index = 0; index < size; index++) {
         auto filePath = filePaths[index];
-   
+
         if (filePath.empty()) {
           graphs.emplace_back(std::make_unique<Graph<T, K>>(std::cin));
         } else {

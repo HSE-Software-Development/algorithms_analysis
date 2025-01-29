@@ -7,7 +7,7 @@
 
 #define inf                                                                    \
   1ul >> 32 // Infinity value for all algorithms (Is it bad due to templates
-          // architecture?)
+            // architecture?)
 
 namespace algorithms {
 /// @brief Ford Bellman algorithm for SSSP

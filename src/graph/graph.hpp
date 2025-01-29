@@ -8,8 +8,10 @@
 // Graph node class
 template <typename T> class GeneralNode {
 private:
-  std::vector<std::pair<GeneralNode<T> *, size_t>> neighbors; // Node neighbors vector
-  T value;          // Value of the node (default using this variable as an index of the node)
+  std::vector<std::pair<GeneralNode<T> *, size_t>>
+      neighbors; // Node neighbors vector
+  T value; // Value of the node (default using this variable as an index of the
+           // node)
 
 public:
   /// @brief Default class contructor
@@ -25,7 +27,10 @@ public:
 
   /// @brief Getter of the all node's neighbors
   /// @return const link to the node's neighbors vector
-  const std::vector<std::pair<GeneralNode<T> *, size_t>> &getNeighbours() const { return neighbors; }
+  const std::vector<std::pair<GeneralNode<T> *, size_t>> &
+  getNeighbours() const {
+    return neighbors;
+  }
 
   /// @brief Getter of the node's value
   /// @return Value of the node
