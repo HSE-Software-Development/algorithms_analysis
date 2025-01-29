@@ -1,54 +1,51 @@
 #ifndef GRAPH_HPP
 #define GRAPH_HPP
 
+#include <fstream>
 #include <memory>
 #include <unordered_map>
 #include <vector>
-#include <fstream>
 
 // GeneralGraph node class
-template<typename T>
-class GeneralNode {
-private:
-    std::vector <std::pair<GeneralNode<T> *, size_t>>
-            neighbors; // Node neighbors vector
-    T value; // Value of the node
-    size_t index; // Index of the node
-    size_t capacity; //
-public:
+template <typename T> class GeneralNode {
+  private:
+    T value;                                                    // Value of the node
+    size_t index;                                               // Index of the node
+    size_t capacity;                                            // Memory capacity (sizeof(neighbors[0])*capacity bytes)
+                                                                // that reserved for push backs
+    std::vector<std::pair<GeneralNode<T> *, size_t>> neighbors; // Node neighbors vector
+
+  public:
     /// @brief Default class contructor
     GeneralNode() {
+        index = -1;
         capacity = 16;
         neighbors = nullptr;
-        index = 0;
     }
 
     /// @brief Class constructor
     /// @param index_ new index of the node
     /// @param capacity_ initial vertex capacity
     GeneralNode(size_t index_, size_t capacity_) {
-        capacity = capacity_;
         index = index_;
+        capacity = capacity_;
         neighbors.reserve(capacity);
     }
 
     /// @brief Class constructor
-    /// @param index_ new index of the node
     /// @param value_ new value of the node
-    /// @param capacity_ initial vertex capacity
+    /// @param index_ new index of the node
+    /// @param capacity_ new capacity of the node
     GeneralNode(size_t index_, T value_, size_t capacity_) {
-        index = index_;
         value = value_;
+        index = index_;
         capacity = capacity_;
         neighbors.reserve(capacity);
     }
 
     /// @brief Getter of the all node's neighbors
     /// @return const link to the node's neighbors vector
-    const std::vector <std::pair<GeneralNode<T> *, size_t>> &
-    getNeighbours() const {
-        return neighbors;
-    }
+    const std::vector<std::pair<GeneralNode<T> *, size_t>> &getNeighbours() const { return neighbors; }
 
     /// @brief Getter of the node's value
     /// @return Value of the node
@@ -65,21 +62,18 @@ public:
     /// @brief Add neighbour to the node
     /// @param neighbour new node's neighbour
     /// @param edgeIndex index of the edge between the node and its neighbour
-    void addNeighbour(GeneralNode<T> *neighbour, size_t edgeIndex) {
-        neighbors.emplace_back(neighbour, edgeIndex);
-    }
+    void addNeighbour(GeneralNode<T> *neighbour, size_t edgeIndex) { neighbors.emplace_back(neighbour, edgeIndex); }
 
     /// @brief Class destructor
-    ~GeneralNode() {}
+    ~GeneralNode() = default;
 }; // End of class 'GeneralNode'
 
-template<typename T>
-class GeneralEdge {
-private:
+template <typename T> class GeneralEdge {
+  private:
     size_t start, end; // Edge's ends
     T weight;          // Edge's weight
 
-public:
+  public:
     /// @brief Class default constructor
     GeneralEdge() { start = end = 0; }
 
@@ -110,19 +104,16 @@ public:
     void setWeight(T weight_) { weight = weight_; }
 
     /// @brief Class destructor
-    ~GeneralEdge() {}
+    ~GeneralEdge() = default;
 }; // End of class 'GeneralEdge'
 
 // GeneralGraph class
-template<typename T, typename K>
-class GeneralGraph {
-private:
-    std::vector <std::unique_ptr<GeneralEdge<T>>>
-            edges; // All edges of the graph
-    std::vector <std::unique_ptr<GeneralNode<K>>>
-            nodes; // All nodes of the graph
+template <typename T, typename K> class GeneralGraph {
+  private:
+    std::vector<std::unique_ptr<GeneralEdge<T>>> edges; // All edges of the graph
+    std::vector<std::unique_ptr<GeneralNode<K>>> nodes; // All nodes of the graph
 
-public:
+  public:
     /// @brief Class constructor
     /// @param inputStream input stream with graph's data
     GeneralGraph(std::istream &inputStream = std::cin) {}
@@ -131,17 +122,20 @@ public:
     /// @param filePath path to the file with graph data (text format)
     GeneralGraph(const std::string &filePath) {
         std::string line;
-
         std::ifstream stream(filePath);
+
         if (stream.is_open()) {
-            int n = 0, flag = 0;
-            if (!(stream >> n) or !(stream >> flag)) {
-                //TODO сломались
+            int flag = 0;
+            size_t n = 0;
+
+            if (!(stream >> n) || !(stream >> flag)) {
+                // TODO
             }
-            nodes.resize(n);
+
             K val;
+            nodes.resize(n);
             try {
-                for (int i = 0; i < n; i++) {
+                for (size_t i = 0; i < n; i++) {
                     if (flag) {
                         stream >> val;
                         nodes[i] = std::make_unique<GeneralNode<K>>(i, val, 16);
@@ -188,7 +182,7 @@ public:
     size_t getSize() const { return nodes.size(); }
 
     /// @brief Class destrutor
-    ~GeneralGraph() {}
+    ~GeneralGraph() = default;
 }; // End of class 'GeneralGraph'
 
 typedef GeneralGraph<int, int> Graph;
