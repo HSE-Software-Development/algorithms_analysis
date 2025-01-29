@@ -17,12 +17,11 @@ int main() {
 
     return 0;*/
 
-    Graph graph("../../.cache/graph_example.txt");
+    Graph graph("../.cache/graph_example.txt");
 
 
-    std::cout << "asdfasdf";
     FunctionType<int>::Type f = algorithms::FordBellman<int>;
-    SSSP<int, size_t> task({"../../.cache/graph_example.txt"}, {0}, f);
+    SSSP<int, size_t> task({"../.cache/graph_example.txt"}, {0}, f);
     task.run(1);
     return 0;
 }

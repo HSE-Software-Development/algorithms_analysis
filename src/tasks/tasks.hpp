@@ -42,9 +42,13 @@ template <typename T, typename K> class SSSP : public Task {
             algorithm = algorithm_;
             auto size = filePaths.size();
 
+            distances.resize(size);
+
             for (size_t index = 0; index < size; index++) {
                 auto filePath = filePaths[index];
                 auto startNodeIndex = startNodeIndexes_[index];
+
+                distances[index].resize(1);
 
                 if (filePath.empty()) {
                     graphs.emplace_back(
@@ -61,9 +65,8 @@ template <typename T, typename K> class SSSP : public Task {
 
     /// @brief Executor of the task
     void run(int logLevel) override {
-        std::cout << "abc" << std::endl;
         algorithm(startNodeIndexes[0], graphs[0].get(), distances[0]);
-        std::cout << distances[0][0] << std::endl;
+        std::cout << distances[0][2] << std::endl;
         // switch (log)
     }
 

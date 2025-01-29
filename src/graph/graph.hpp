@@ -54,6 +54,10 @@ public:
     /// @return Value of the node
     T getValue() const { return value; }
 
+    /// @brief Getter of the node's index
+    /// @return Index of the node
+    T getIndex() const { return index; }
+
     /// @brief Setter of the node's value
     /// @param value_ new value of the node
     void setValue(const T &value_) { value = value_; }
@@ -147,10 +151,10 @@ public:
                 }
                 size_t in, out;
                 T weight;
-                while (stream >> out >> in >> weight) {
-                    edges.emplace_back(std::make_unique<GeneralEdge<T>>(out, in, weight));
-                    nodes[out]->addNeighbour(nodes[in].get(), edges.size());
-                    nodes[in]->addNeighbour(nodes[out].get(), edges.size());
+                while (stream >> in >> out >> weight) {
+                    edges.emplace_back(std::make_unique<GeneralEdge<T>>(in, out, weight));
+                    nodes[out]->addNeighbour(nodes[in].get(), edges.size() - 1);
+                    nodes[in]->addNeighbour(nodes[out].get(), edges.size() - 1);
                 }
             } catch (std::exception &e) {
                 std::cout << e.what();
