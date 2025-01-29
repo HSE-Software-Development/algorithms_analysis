@@ -39,10 +39,25 @@ template <typename T, typename K> class SSSP : public Task {
             distances.resize(size);
             graphs = graphs_;
             algorithm = algorithm_;
+        } else {
+          std::cout << "The number of graphs is 0 or is not equal to the number of start nodes, aborting.." << std::endl;
         }
     }
 
+    /// @brief Getter of SSSP start node's indexes
+    /// @return All start node's indexes vector
+    const std::vector<size_t> &getStartNodeIndexes() const { return startNodeIndexes; }
+
+    /// @brief Getter of SSSP distances
+    /// @return All distances vector
+    const std::vector<std::vector<T>> &getDistances() const { return distances; }
+
+    /// @brief Getter of SSSP graphs
+    /// @return All graphs vector
+    const std::vector<GeneralGraph<T, K> *> &getGraphs() const { return graphs; }
+
     /// @brief Executor of the task
+    /// @param logLevel logging level
     void run(int logLevel = 1) override {
         // TODO
         const auto size = graphs.size();
@@ -54,8 +69,8 @@ template <typename T, typename K> class SSSP : public Task {
                 std::cout << "\t" << j + 1 << ") Distanse from node #" << startNodeIndexes[i] << " to node #" << j
                           << " = " << distances[i][j] << "\n";
             }
+            std::cout << std::endl;
         }
-        std::cout << std::endl;
     }
 
     /// @brief Class destructor
@@ -84,6 +99,8 @@ template <typename T, typename K> class APSP : public Task {
             distances.resize(size);
             graphs = graphs_;
             algorithm = algorithm_;
+        } else {
+          std::cout << "The number of graphs is 0, aborting.." << std::endl;
         }
     }
 
