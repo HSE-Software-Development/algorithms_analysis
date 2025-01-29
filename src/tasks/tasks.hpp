@@ -31,9 +31,11 @@ public:
   /// @param filePath path to the file with graph data (if it is empty std::cin
   /// will be used
   /// @param startNodeIndex_ start node index in the graph
-  SSSP(std::vector<std::string> filePaths, std::vector<size_t> startNodeIndexes_) {
+  /// @param algorithm algorithm function instance
+  SSSP(std::vector<std::string> filePaths, std::vector<size_t> startNodeIndexes_, const std::function<void(size_t, const Graph<T, size_t> &, std::vector<T> &)> &algorithm_) {
     bool is_ok = !filePaths.empty() && !startNodeIndexes_.empty() && filePaths.size() == startNodeIndexes_.size();
     if (is_ok) {
+      algorithm = algorithm_;
       auto size = filePaths.size();
 
       for (size_t index = 0; index < size; index++) {
@@ -52,14 +54,16 @@ public:
   }
 
   /// @brief Executor of the task
-  void run(int logLevel = 1) {}
+  void run(int logLevel = 1) {
+    switch (log)
+  }
 
   /// @brief Class destructor
   ~SSSP() {}
 }; // End of class 'SSSP'
 
-// ASSP task class
-template <typename T, typename K> class ASSP : public Task {
+// APSP task class
+template <typename T, typename K> class APSP : public Task {
 private:
   std::vector<Graph<T, K> *>
       graphs; // Non-owning pointer to the graph for the task
@@ -72,9 +76,12 @@ public:
   /// @brief Class constructor
   /// @param filePath path to the file with graph data (if it is empty std::cin
   /// will be used)
-  ASSP(std::vector<std::string> filePaths) {
+  /// @param algorithm algorithm function instance
+  APSP(std::vector<std::string> filePaths, std::function<void(const Graph<T, size_t> &, std::vector<std::vector<T>> &)>
+      algorithm_) {
     bool is_ok = !filePaths.empty();
     if (is_ok) {
+      algorithm = algorithm_;
       auto size = filePaths.size();
 
       for (size_t index = 0; index < size; index++) {
@@ -93,7 +100,7 @@ public:
   void run(int logLevel = 1) {}
 
   /// @brief Class destructor
-  ~ASSP() {}
+  ~APSP() {}
 };
 
 #endif // TASKS_HPP

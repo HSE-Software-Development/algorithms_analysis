@@ -9,7 +9,7 @@
 template <typename T> class GeneralNode {
 private:
   std::vector<std::pair<GeneralNode<T> *, size_t>> neighbors; // Node neighbors vector
-  T value;          // Value of the node
+  T value;          // Value of the node (default using this variable as an index of the node)
 
 public:
   /// @brief Default class contructor
