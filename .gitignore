@@ -1,4 +1,6 @@
 #.cache/*
+.git/*
+.github/*
 .vscode/*
 src/.build/*
 src/cmake-build-debug/*
