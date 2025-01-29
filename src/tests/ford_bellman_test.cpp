@@ -1,5 +1,8 @@
 #include <gtest/gtest.h>
 #include "../tasks/tasks.hpp"
+#include <vector>
+#include <iostream>
+
 
 template <typename T, typename K> struct FunctionType {
     typedef std::function<void(size_t, GeneralGraph<T, K> *, std::vector<T> &)> Type;
@@ -16,5 +19,14 @@ TEST(FordBellman, Graph1) {
     SSSP<int, int> task(graphs, {0}, f);
 
     task.run();
-    EXPECT_EQ(7 * 6, 42);
+
+    std::vector<std::vector<int>> right_distances = {
+        {0, 10, 30, 40}
+    };
+
+    for (int i = 0; i < task.distances.size(); i++) {
+        for (int j = 0; j < task.distances[i].size(); j++) {
+            EXPECT_EQ(task.distances[i][j], right_distances[i][j]);
+        }
+    }
 }

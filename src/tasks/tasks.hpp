@@ -13,17 +13,19 @@ class Task {
 
     /// @brief Class destructor
     virtual ~Task() = default;
+
 }; // End of class 'Task'
 
 // SSSP task class
 template <typename T, typename K> class SSSP : public Task {
   private:
     std::vector<size_t> startNodeIndexes;     // Start node index for the task
-    std::vector<std::vector<T>> distances;    // Distances from the start node to all others
     std::vector<GeneralGraph<T, K> *> graphs; // Non-owning pointer to the graphs for the task
     std::function<void(size_t, GeneralGraph<T, K> *, std::vector<T> &)> algorithm; // Algorithm for the task
 
   public:
+    std::vector<std::vector<T>> distances;    // Distances from the start node to all others
+
     /// @brief Class constructor
     /// @param graphs_ vector of all graphs for the task
     /// @param startNodeIndexes_ vector of all start nodes for the task
