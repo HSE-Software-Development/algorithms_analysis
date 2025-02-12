@@ -8,12 +8,12 @@ template <typename T, typename K> struct FunctionType {
 };
 
 // Demonstrate some basic assertions.
-TEST(FordBellman, Graph1) {
-    std::unique_ptr<Graph> graph_1 = std::make_unique<Graph>("../../.cache/graph_example_1.txt");
+TEST(BFS, Graph1) {
+    std::unique_ptr<Graph> graph_1 = std::make_unique<Graph>("../../.cache/graph_example_4.txt");
 
     std::cout << graph_1.get()->getSize() << std::endl;
 
-    FunctionType<int, int>::Type f = algorithms::FordBellman<int, int>;
+    FunctionType<int, int>::Type f = algorithms::BFS<int, int>;
 
     std::vector<Graph *> graphs;
 
@@ -22,7 +22,7 @@ TEST(FordBellman, Graph1) {
 
     task.run();
 
-    std::vector<std::vector<int>> right_distances = {{0, 10, 30, 40}};
+    std::vector<std::vector<int>> right_distances = {{0, 10, 20, 40, 80}};
 
     std::cout << task.getDistances().size() << std::endl;
     for (int i = 0; i < task.getDistances().size(); i++) {
@@ -31,3 +31,5 @@ TEST(FordBellman, Graph1) {
         }
     }
 }
+
+
