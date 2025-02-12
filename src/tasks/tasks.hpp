@@ -106,7 +106,7 @@ template <typename T, typename K> class APSP : public Task {
         }
     }
 
-    /// @brief Executor of the ta sk
+    /// @brief Executor of the task
     void run(int logLevel = 1) override {}
 
     /// @brief Class destructor
