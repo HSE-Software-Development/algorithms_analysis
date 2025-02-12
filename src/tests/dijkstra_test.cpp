@@ -31,5 +31,3 @@ TEST(Dijkstra, Graph1) {
         }
     }
 }
-
-

@@ -1,8 +1,8 @@
 #ifndef ALGORITHMS_HPP
 #define ALGORITHMS_HPP
 
-#include <queue>
 #include <chrono>
+#include <queue>
 
 #include "../graph/graph.hpp"
 
@@ -14,9 +14,7 @@
 /// @return current time in ms
 uint64_t getTimeInMs();
 
-
 namespace algorithms {
-
 
 /// @brief Ford Bellman algorithm for SSSP
 /// @tparam T type for graph's weights and distances
@@ -57,7 +55,6 @@ void FordBellman(size_t startIndex, GeneralGraph<T, K> *graph, std::vector<T> &d
     }
 }
 
-
 /// @brief Ford Bellman algorithm for SSSP
 /// @tparam T type for graph's weights and distances
 /// @param startIndex start index for the SSSP
@@ -65,9 +62,11 @@ void FordBellman(size_t startIndex, GeneralGraph<T, K> *graph, std::vector<T> &d
 /// @param distances vector of distances from start point to all others
 template <typename T, typename K>
 void DFS_Rec(const GeneralNode<T> *node, const GeneralGraph<T, K> *graph, std::vector<T> &distances) {
-    for (const std::pair<GeneralNode<T> *, size_t> &node_and_index : graph->getNode(node->getIndex())->getNeighbours()) {
+    for (const std::pair<GeneralNode<T> *, size_t> &node_and_index :
+         graph->getNode(node->getIndex())->getNeighbours()) {
         if (distances[node_and_index.first->getIndex()] == inf) {
-            distances[node_and_index.first->getIndex()] = distances[node->getIndex()] + graph->getEdge(node_and_index.second)->getWeight();
+            distances[node_and_index.first->getIndex()] =
+                distances[node->getIndex()] + graph->getEdge(node_and_index.second)->getWeight();
             DFS_Rec(node_and_index.first, graph, distances);
         }
     }
@@ -78,8 +77,7 @@ void DFS_Rec(const GeneralNode<T> *node, const GeneralGraph<T, K> *graph, std::v
 /// @param startIndex start index for the SSSP
 /// @param graph graph itself
 /// @param distances vector of distances from start point to all others
-template <typename T, typename K>
-void DFS(size_t startIndex, GeneralGraph<T, K> *graph, std::vector<T> &distances) {
+template <typename T, typename K> void DFS(size_t startIndex, GeneralGraph<T, K> *graph, std::vector<T> &distances) {
     const auto size = graph->getSize();
 
     distances.resize(size);
@@ -89,14 +87,12 @@ void DFS(size_t startIndex, GeneralGraph<T, K> *graph, std::vector<T> &distances
     DFS_Rec(graph->getNode(startIndex), graph, distances);
 }
 
-
 /// @brief BFS algorithm for SSSP
 /// @tparam T type for graph's weights and distances
 /// @param startIndex start index for the SSSP
 /// @param graph graph itself
 /// @param distances vector of distances from start point to all others
-template <typename T, typename K>
-void BFS(size_t startIndex, GeneralGraph<T, K> *graph, std::vector<T> &distances) {
+template <typename T, typename K> void BFS(size_t startIndex, GeneralGraph<T, K> *graph, std::vector<T> &distances) {
     const auto size = graph->getSize();
 
     distances.resize(size);
@@ -109,12 +105,13 @@ void BFS(size_t startIndex, GeneralGraph<T, K> *graph, std::vector<T> &distances
         size_t nodeIndex = horizon.front();
         horizon.pop();
         std::cout << nodeIndex << std::endl;
-        const GeneralNode<T>* node = graph->getNode(nodeIndex);
+        const GeneralNode<T> *node = graph->getNode(nodeIndex);
 
         for (const std::pair<GeneralNode<T> *, size_t> &node_and_index : node->getNeighbours()) {
             std::cout << node_and_index.first->getIndex() << std::endl;
             if (distances[node_and_index.first->getIndex()] == inf) {
-                distances[node_and_index.first->getIndex()] = distances[nodeIndex] + graph->getEdge(node_and_index.second)->getWeight();
+                distances[node_and_index.first->getIndex()] =
+                    distances[nodeIndex] + graph->getEdge(node_and_index.second)->getWeight();
                 horizon.push(node_and_index.first->getIndex());
             }
         }
@@ -144,15 +141,13 @@ void Dijkstra(size_t startIndex, GeneralGraph<T, K> *graph, std::vector<T> &dist
 
         a[v] = true;
         for (const std::pair<GeneralNode<T> *, size_t> &node_and_index : graph->getNode(v)->getNeighbours()) {
-            distances[node_and_index.first->getIndex()] = std::min(distances[node_and_index.first->getIndex()], distances[v] + graph->getEdge(node_and_index.second)->getWeight());
+            distances[node_and_index.first->getIndex()] =
+                std::min(distances[node_and_index.first->getIndex()],
+                         distances[v] + graph->getEdge(node_and_index.second)->getWeight());
         }
     }
-
 }
 
-
-};
-
-
+}; // namespace algorithms
 
 #endif // ALGORITHMS_HPP

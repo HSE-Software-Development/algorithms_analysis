@@ -31,5 +31,3 @@ TEST(BFS, Graph1) {
         }
     }
 }
-
-

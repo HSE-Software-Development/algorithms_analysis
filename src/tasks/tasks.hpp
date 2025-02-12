@@ -4,6 +4,7 @@
 #include <functional>
 
 #include "../algorithms/algorithms.hpp"
+#include "helper.hpp"
 
 // Task class
 class Task {
@@ -23,6 +24,7 @@ template <typename T, typename K> class SSSP : public Task {
     std::vector<GeneralGraph<T, K> *> graphs; // Non-owning pointer to the graphs for the task
     std::function<void(size_t, GeneralGraph<T, K> *, std::vector<T> &)> algorithm; // Algorithm for the task
     std::vector<std::vector<T>> distances; // Distances from the start node to all others
+    std::vector<double> benchmarks;        // Algorithm executions time in seconds
 
   public:
     /// @brief Class constructor
@@ -38,6 +40,7 @@ template <typename T, typename K> class SSSP : public Task {
 
             startNodeIndexes = startNodeIndexes_;
             distances.resize(size);
+            benchmarks.resize(size);
             graphs = graphs_;
             algorithm = algorithm_;
         } else {
@@ -66,10 +69,13 @@ template <typename T, typename K> class SSSP : public Task {
 
         for (size_t i = 0; i < size; i++) {
             std::cout << "SSSP for graph #" << i + 1 << ":\n";
+            benchmarks[i] = static_cast<double>(getTimeInMs());
             algorithm(startNodeIndexes[i], graphs[i], distances[i]);
+            benchmarks[i] = (static_cast<double>(getTimeInMs()) - benchmarks[i]);
             for (size_t j = 0; j < graphs[i]->getSize(); j++) {
                 std::cout << "\t" << j + 1 << ") Distanse from node #" << startNodeIndexes[i] << " to node #" << j
-                          << " = " << distances[i][j] << "\n";
+                          << " = " << distances[i][j] << "; "
+                          << "time = " << benchmarks[i] << " sec\n";
             }
             std::cout << std::endl;
         }

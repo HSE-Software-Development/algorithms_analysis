@@ -7,7 +7,8 @@ template <typename T, typename K> struct FunctionType {
 };
 
 int main() {
-    std::unique_ptr<Graph> graph_1 = std::make_unique<Graph>("/home/dvlasov/projects/algorithms_analysis/.cache/graph_example_1.txt");
+    std::unique_ptr<Graph> graph_1 =
+        std::make_unique<Graph>("/home/dvlasov/projects/algorithms_analysis/.cache/graph_example_1.txt");
     FunctionType<int, int>::Type f = algorithms::FordBellman<int, int>;
 
     std::vector<Graph *> graphs;

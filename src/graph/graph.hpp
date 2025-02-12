@@ -1,8 +1,8 @@
 #ifndef GRAPH_HPP
 #define GRAPH_HPP
 
-#include <iostream>
 #include <fstream>
+#include <iostream>
 #include <memory>
 #include <unordered_map>
 #include <vector>
