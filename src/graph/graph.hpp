@@ -1,6 +1,7 @@
 #ifndef GRAPH_HPP
 #define GRAPH_HPP
 
+#include <iostream>
 #include <fstream>
 #include <memory>
 #include <unordered_map>
@@ -153,6 +154,8 @@ template <typename T, typename K> class GeneralGraph {
             } catch (std::exception &e) {
                 std::cout << e.what();
             }
+        } else {
+            std::cout << "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" << std::endl;
         }
         stream.close();
     }

@@ -22,10 +22,9 @@ template <typename T, typename K> class SSSP : public Task {
     std::vector<size_t> startNodeIndexes;     // Start node index for the task
     std::vector<GeneralGraph<T, K> *> graphs; // Non-owning pointer to the graphs for the task
     std::function<void(size_t, GeneralGraph<T, K> *, std::vector<T> &)> algorithm; // Algorithm for the task
+    std::vector<std::vector<T>> distances; // Distances from the start node to all others
 
   public:
-    std::vector<std::vector<T>> distances;    // Distances from the start node to all others
-
     /// @brief Class constructor
     /// @param graphs_ vector of all graphs for the task
     /// @param startNodeIndexes_ vector of all start nodes for the task
@@ -42,7 +41,8 @@ template <typename T, typename K> class SSSP : public Task {
             graphs = graphs_;
             algorithm = algorithm_;
         } else {
-          std::cout << "The number of graphs is 0 or is not equal to the number of start nodes, aborting.." << std::endl;
+            std::cout << "The number of graphs is 0 or is not equal to the number of start nodes, aborting.."
+                      << std::endl;
         }
     }
 
@@ -102,7 +102,7 @@ template <typename T, typename K> class APSP : public Task {
             graphs = graphs_;
             algorithm = algorithm_;
         } else {
-          std::cout << "The number of graphs is 0, aborting.." << std::endl;
+            std::cout << "The number of graphs is 0, aborting.." << std::endl;
         }
     }
 

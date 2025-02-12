@@ -1,8 +1,7 @@
-#include <gtest/gtest.h>
 #include "../tasks/tasks.hpp"
-#include <vector>
+#include <gtest/gtest.h>
 #include <iostream>
-
+#include <vector>
 
 template <typename T, typename K> struct FunctionType {
     typedef std::function<void(size_t, GeneralGraph<T, K> *, std::vector<T> &)> Type;
@@ -10,7 +9,10 @@ template <typename T, typename K> struct FunctionType {
 
 // Demonstrate some basic assertions.
 TEST(FordBellman, Graph1) {
-    std::unique_ptr<Graph> graph_1 = std::make_unique<Graph>("../.cache/graph_example.txt");
+    std::unique_ptr<Graph> graph_1 = std::make_unique<Graph>("../../.cache/graph_example_1.txt");
+
+    std::cout << graph_1.get()->getSize() << std::endl;
+
     FunctionType<int, int>::Type f = algorithms::FordBellman<int, int>;
 
     std::vector<Graph *> graphs;
@@ -20,13 +22,12 @@ TEST(FordBellman, Graph1) {
 
     task.run();
 
-    std::vector<std::vector<int>> right_distances = {
-        {0, 10, 30, 40}
-    };
+    std::vector<std::vector<int>> right_distances = {{0, 10, 30, 40}};
 
-    for (int i = 0; i < task.distances.size(); i++) {
-        for (int j = 0; j < task.distances[i].size(); j++) {
-            EXPECT_EQ(task.distances[i][j], right_distances[i][j]);
+    std::cout << task.getDistances().size() << std::endl;
+    for (int i = 0; i < task.getDistances().size(); i++) {
+        for (int j = 0; j < task.getDistances()[i].size(); j++) {
+            EXPECT_EQ(task.getDistances()[i][j], right_distances[i][j]);
         }
     }
 }
