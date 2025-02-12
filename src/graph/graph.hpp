@@ -155,7 +155,7 @@ template <typename T, typename K> class GeneralGraph {
                 std::cout << e.what();
             }
         } else {
-            std::cout << "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" << std::endl;
+            std::cout << "Graph file is not found: " << filePath << ", aborting.." << std::endl;
         }
         stream.close();
     }

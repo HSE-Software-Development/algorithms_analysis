@@ -9,7 +9,7 @@ template <typename T, typename K> struct FunctionType {
 
 // Demonstrate some basic assertions.
 TEST(FordBellman, Graph1) {
-    std::unique_ptr<Graph> graph_1 = std::make_unique<Graph>("../../.cache/graph_example_1.txt");
+    std::unique_ptr<Graph> graph_1 = std::make_unique<Graph>("../.cache/graph_example_1.txt");
 
     std::cout << graph_1.get()->getSize() << std::endl;
 
