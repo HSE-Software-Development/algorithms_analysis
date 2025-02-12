@@ -11,12 +11,13 @@ jobs:
         run: sudo apt install cmake
       - name: Building...
         run: |
+          cd src
           mkdir build && cd build
-          cmake ../src
+          cmake ..
           cmake --build .
       - name: Testing...
         run: |
-          cd build
+          cd src/build
           ./AlgorithmTests
 
       
