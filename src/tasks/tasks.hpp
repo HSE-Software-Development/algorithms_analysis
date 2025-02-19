@@ -3,6 +3,7 @@
 
 #include <functional>
 
+#include "memory.hpp"
 #include "../algorithms/algorithms.hpp"
 
 // Task class
@@ -13,7 +14,7 @@ class Task {
 
     /// @brief Get current time in ms
     /// @return current time in ms
-    uint64_t getTimeInMs() {
+    uint64_t getTimeInMs() noexcept {
         using namespace std::chrono;
         return duration_cast<milliseconds>(system_clock::now().time_since_epoch()).count();
     }
@@ -30,7 +31,9 @@ template <typename T, typename K> class SSSP : public Task {
     std::vector<GeneralGraph<T, K> *> graphs; // Non-owning pointer to the graphs for the task
     std::function<void(size_t, GeneralGraph<T, K> *, std::vector<T> &)> algorithm; // Algorithm for the task
     std::vector<std::vector<T>> distances; // Distances from the start node to all others
-    std::vector<double> benchmarks;        // Algorithm executions time in seconds
+    std::vector<double> timeBenchmarks;        // Algorithm executions time in seconds
+    double totalMemoryUsage; // Total memory usage by whole task in KB
+    std::vector<double> memoryBenchmarks; // Algorithm memory usage in KB
 
   public:
     /// @brief Class constructor
@@ -42,13 +45,16 @@ template <typename T, typename K> class SSSP : public Task {
         bool is_ok = !graphs_.empty() && !startNodeIndexes_.empty() && graphs_.size() == startNodeIndexes_.size();
 
         if (is_ok) {
+            totalMemoryUsage = MemoryBenchmarking::getInstance().getTotalMemoryAllocated();
             const auto size = graphs_.size();
 
             startNodeIndexes = startNodeIndexes_;
             distances.resize(size);
-            benchmarks.resize(size);
+            memoryBenchmarks.resize(size);
+            timeBenchmarks.resize(size);
             graphs = graphs_;
             algorithm = algorithm_;
+            totalMemoryUsage = static_cast<double>(MemoryBenchmarking::getInstance().getTotalMemoryAllocated() - totalMemoryUsage) / 1000;
         } else {
             std::cout << "The number of graphs is 0 or is not equal to the number of start nodes, aborting.."
                       << std::endl;
@@ -57,15 +63,23 @@ template <typename T, typename K> class SSSP : public Task {
 
     /// @brief Getter of SSSP start node's indexes
     /// @return All start node's indexes vector
-    const std::vector<size_t> &getStartNodeIndexes() const { return startNodeIndexes; }
+    const std::vector<size_t> &getStartNodeIndexes() const noexcept { return startNodeIndexes; }
 
     /// @brief Getter of SSSP distances
     /// @return All distances vector
-    const std::vector<std::vector<T>> &getDistances() const { return distances; }
+    const std::vector<std::vector<T>> &getDistances() const noexcept { return distances; }
+
+    /// @brief Getter of SSSP time benchmarks
+    /// @return All time benchmarks
+    const std::vector<double> &getTimeBenchmarks() const noexcept { return timeBenchmarks; }
+
+    /// @brief Getter of SSSP memory benchmarks
+    /// @return All memory benchmarks
+    const std::vector<size_t> &getMemoryBenchmarks() const noexcept { return memoryBenchmarks; }
 
     /// @brief Getter of SSSP graphs
     /// @return All graphs vector
-    const std::vector<GeneralGraph<T, K> *> &getGraphs() const { return graphs; }
+    const std::vector<GeneralGraph<T, K> *> &getGraphs() const noexcept { return graphs; }
 
     /// @brief Executor of the task
     /// @param logLevel logging level
@@ -75,14 +89,19 @@ template <typename T, typename K> class SSSP : public Task {
 
         for (size_t i = 0; i < size; i++) {
             std::cout << "SSSP for graph #" << i + 1 << ":\n";
-            benchmarks[i] = static_cast<double>(getTimeInMs());
+            memoryBenchmarks[i] = MemoryBenchmarking::getInstance().getTotalMemoryAllocated();
+            timeBenchmarks[i] = static_cast<double>(getTimeInMs());
             algorithm(startNodeIndexes[i], graphs[i], distances[i]);
-            benchmarks[i] = (static_cast<double>(getTimeInMs()) - benchmarks[i]);
+            memoryBenchmarks[i] = static_cast<double>(MemoryBenchmarking::getInstance().getTotalMemoryAllocated() - memoryBenchmarks[i]) / 1000;
+            totalMemoryUsage += memoryBenchmarks[i];
+            timeBenchmarks[i] = (static_cast<double>(getTimeInMs()) - timeBenchmarks[i]);
             for (size_t j = 0; j < graphs[i]->getSize(); j++) {
                 std::cout << "\t" << j + 1 << ") Distanse from node #" << startNodeIndexes[i] << " to node #" << j
                           << " = " << distances[i][j] << ";\n";
             }
-            std::cout << "\t\tTime: " << benchmarks[i] << " ms." << std::endl;
+            std::cout << "\t\tMemory usage by task: " << totalMemoryUsage << " KB;\n";
+            std::cout << "\t\tMemory usage by alorithm: " << memoryBenchmarks[i] << " KB;\n";
+            std::cout << "\t\tTime: " << timeBenchmarks[i] << " ms." << std::endl;
         }
     }
 
