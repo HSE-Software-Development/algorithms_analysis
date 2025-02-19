@@ -21,7 +21,6 @@ else ()
     message(FATAL_ERROR "Not supported OS (only MacOS/Linux/Windows)")
 endif ()
 
-
 # for detecting memory leaks
 add_compile_options(-fsanitize=address)
 add_compile_options(-fsanitize=undefined)
