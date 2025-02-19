@@ -4,13 +4,19 @@
 #include <functional>
 
 #include "../algorithms/algorithms.hpp"
-#include "helper.hpp"
 
 // Task class
 class Task {
   public:
     /// @brief Run task method
     virtual void run(int logLevel) = 0;
+
+    /// @brief Get current time in ms
+    /// @return current time in ms
+    uint64_t getTimeInMs() {
+        using namespace std::chrono;
+        return duration_cast<milliseconds>(system_clock::now().time_since_epoch()).count();
+    }
 
     /// @brief Class destructor
     virtual ~Task() = default;

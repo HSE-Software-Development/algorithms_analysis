@@ -6,9 +6,9 @@ set(CMAKE_CXX_STANDARD 17)
 
 # include_directories(include)
 
-file(GLOB SOURCES "*.cpp")
+file(GLOB SOURCES "algorithms/*.cpp" "graph/*.cpp" "tasks/*.cpp" "main.cpp")
 file(GLOB HEADERS "*.hpp")
-file(GLOB TEST_SOURCES "tests/*.cpp")
+file(GLOB TEST_SOURCES "algorithms/*.cpp" "graph/*.cpp" "tasks/*.cpp" "tests/*.cpp")
 
 if (APPLE)
     message(STATUS ">>> Apple detected")
@@ -39,6 +39,6 @@ FetchContent_MakeAvailable(googletest)
 
 add_executable(${PROJECT_NAME} ${SOURCES})
 
-add_executable(AlgorithmTests ${TEST_SOURCES})
+add_executable(${PROJECT_NAME}_tests ${TEST_SOURCES})
 
-target_link_libraries(AlgorithmTests gtest gtest_main)
+target_link_libraries(${PROJECT_NAME}_tests gtest gtest_main)

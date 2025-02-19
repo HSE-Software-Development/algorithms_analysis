@@ -10,10 +10,6 @@
     10000 // Infinity value for all algorithms (Is it bad due to templates
           // architecture?)
 
-/// @brief Get current time in ms
-/// @return current time in ms
-uint64_t getTimeInMs();
-
 namespace algorithms {
 
 /// @brief Ford Bellman algorithm for SSSP

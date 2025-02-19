@@ -1,11 +1,4 @@
-#include "../tasks/tasks.hpp"
-#include <gtest/gtest.h>
-#include <iostream>
-#include <vector>
-
-template <typename T, typename K> struct FunctionType {
-    typedef std::function<void(size_t, GeneralGraph<T, K> *, std::vector<T> &)> Type;
-};
+#include "tests.hpp"
 
 // Demonstrate some basic assertions.
 TEST(FordBellman, Graph1) {
