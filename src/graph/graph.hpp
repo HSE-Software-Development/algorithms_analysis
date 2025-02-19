@@ -46,24 +46,26 @@ template <typename T> class GeneralNode {
 
     /// @brief Getter of the all node's neighbors
     /// @return const link to the node's neighbors vector
-    const std::vector<std::pair<GeneralNode<T> *, size_t>> &getNeighbours() const { return neighbors; }
+    const std::vector<std::pair<GeneralNode<T> *, size_t>> &getNeighbours() const noexcept { return neighbors; }
 
     /// @brief Getter of the node's value
     /// @return Value of the node
-    T getValue() const { return value; }
+    T getValue() const noexcept { return value; }
 
     /// @brief Getter of the node's index
     /// @return Index of the node
-    T getIndex() const { return index; }
+    T getIndex() const noexcept { return index; }
 
     /// @brief Setter of the node's value
     /// @param value_ new value of the node
-    void setValue(const T &value_) { value = value_; }
+    void setValue(const T &value_) noexcept { value = value_; }
 
     /// @brief Add neighbour to the node
     /// @param neighbour new node's neighbour
     /// @param edgeIndex index of the edge between the node and its neighbour
-    void addNeighbour(GeneralNode<T> *neighbour, size_t edgeIndex) { neighbors.emplace_back(neighbour, edgeIndex); }
+    void addNeighbour(GeneralNode<T> *neighbour, size_t edgeIndex) noexcept {
+        neighbors.emplace_back(neighbour, edgeIndex);
+    }
 
     /// @brief Class destructor
     ~GeneralNode() = default;
@@ -90,19 +92,19 @@ template <typename T> class GeneralEdge {
 
     /// @brief Getter of the edge's weight
     /// @return Weight of the edge
-    T getWeight() const { return weight; }
+    T getWeight() const noexcept { return weight; }
 
     /// @brief Getter of the edge's start node index
     /// @return Start node index of the edge
-    size_t getStart() const { return start; }
+    size_t getStart() const noexcept { return start; }
 
     /// @brief Getter of the edge's end node index
     /// @return End node index of the edge
-    size_t getEnd() const { return end; }
+    size_t getEnd() const noexcept { return end; }
 
     /// @brief Setter of the edge's weight
     /// @param weight_ new weight of the edge
-    void setWeight(T weight_) { weight = weight_; }
+    void setWeight(T weight_) noexcept { weight = weight_; }
 
     /// @brief Class destructor
     ~GeneralEdge() = default;
@@ -163,7 +165,7 @@ template <typename T, typename K> class GeneralGraph {
     /// @brief Getter of graph's edge by its index
     /// @param index index of the grap's edge
     /// @return Non-owning pointer to the edge in the graph
-    const GeneralEdge<T> *getEdge(size_t index) const {
+    const GeneralEdge<T> *getEdge(size_t index) const noexcept {
         if (index >= edges.size()) {
             return nullptr;
         }
@@ -173,7 +175,7 @@ template <typename T, typename K> class GeneralGraph {
     /// @brief Getter of graph's node by its index
     /// @param index index of the grap's node
     /// @return Non-owning pointer to the node in the graph
-    const GeneralNode<K> *getNode(size_t index) const {
+    const GeneralNode<K> *getNode(size_t index) const noexcept {
         if (index >= nodes.size()) {
             return nullptr;
         }
@@ -182,7 +184,7 @@ template <typename T, typename K> class GeneralGraph {
 
     /// @brief Get graph's size
     /// @return size of the graph
-    size_t getSize() const { return nodes.size(); }
+    size_t getSize() const noexcept { return nodes.size(); }
 
     /// @brief Class destrutor
     ~GeneralGraph() = default;
