@@ -3,6 +3,7 @@ set(PROJECT_NAME HSE_SD)
 project(${PROJECT_NAME})
 
 set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_COMPILER_LAUNCHER ${CMAKE_COMMAND} -E env ASAN_OPTIONS=detect_odr_violation=0 ${CMAKE_CXX_COMPILER_LAUNCHER})
 
 # include_directories(include)
 
