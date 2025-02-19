@@ -18,6 +18,6 @@ jobs:
       - name: Testing...
         run: |
           cd src/build
-          ./AlgorithmTests
+          ./HSE_SD_tests
 
       
