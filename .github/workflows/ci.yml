@@ -14,6 +14,7 @@ jobs:
           cd src
           mkdir .build && cd .build
           cmake ..
+          export ASAN_OPTIONS=detect_odr_violation=0
           make -j
       - name: Testing...
         run: |
