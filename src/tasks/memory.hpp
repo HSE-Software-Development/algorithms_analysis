@@ -5,7 +5,7 @@
 #include <memory>
 
 class MemoryBenchmarking {
-private:
+  private:
     size_t totalMemoryAllocated;
 
     explicit MemoryBenchmarking() = default;
@@ -14,7 +14,8 @@ private:
     MemoryBenchmarking &operator=(MemoryBenchmarking const &) = delete;
 
     ~MemoryBenchmarking() = default;
-public:
+
+  public:
     static MemoryBenchmarking &getInstance() {
         static MemoryBenchmarking memoryBenchmarkingInstance;
 
@@ -23,12 +24,12 @@ public:
 
     size_t getTotalMemoryAllocated() const noexcept { return totalMemoryAllocated; }
 
-    friend void* operator new(size_t size);
-    friend void operator delete(void* ptr) noexcept;
+    friend void *operator new(size_t size);
+    friend void operator delete(void *ptr) noexcept;
 };
 
-void* operator new(size_t size);
+void *operator new(size_t size);
 
-void operator delete(void* ptr) noexcept;
+void operator delete(void *ptr) noexcept;
 
 #endif // MEMORY_HPP

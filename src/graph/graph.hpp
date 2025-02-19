@@ -63,7 +63,9 @@ template <typename T> class GeneralNode {
     /// @brief Add neighbour to the node
     /// @param neighbour new node's neighbour
     /// @param edgeIndex index of the edge between the node and its neighbour
-    void addNeighbour(GeneralNode<T> *neighbour, size_t edgeIndex) noexcept { neighbors.emplace_back(neighbour, edgeIndex); }
+    void addNeighbour(GeneralNode<T> *neighbour, size_t edgeIndex) noexcept {
+        neighbors.emplace_back(neighbour, edgeIndex);
+    }
 
     /// @brief Class destructor
     ~GeneralNode() = default;

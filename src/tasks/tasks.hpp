@@ -3,8 +3,8 @@
 
 #include <functional>
 
-#include "memory.hpp"
 #include "../algorithms/algorithms.hpp"
+#include "memory.hpp"
 
 // Task class
 class Task {
@@ -31,9 +31,9 @@ template <typename T, typename K> class SSSP : public Task {
     std::vector<GeneralGraph<T, K> *> graphs; // Non-owning pointer to the graphs for the task
     std::function<void(size_t, GeneralGraph<T, K> *, std::vector<T> &)> algorithm; // Algorithm for the task
     std::vector<std::vector<T>> distances; // Distances from the start node to all others
-    std::vector<double> timeBenchmarks;        // Algorithm executions time in seconds
-    double totalMemoryUsage; // Total memory usage by whole task in KB
-    std::vector<double> memoryBenchmarks; // Algorithm memory usage in KB
+    std::vector<double> timeBenchmarks;    // Algorithm executions time in seconds
+    double totalMemoryUsage;               // Total memory usage by whole task in KB
+    std::vector<double> memoryBenchmarks;  // Algorithm memory usage in KB
 
   public:
     /// @brief Class constructor
@@ -54,7 +54,9 @@ template <typename T, typename K> class SSSP : public Task {
             timeBenchmarks.resize(size);
             graphs = graphs_;
             algorithm = algorithm_;
-            totalMemoryUsage = static_cast<double>(MemoryBenchmarking::getInstance().getTotalMemoryAllocated() - totalMemoryUsage) / 1000;
+            totalMemoryUsage =
+                static_cast<double>(MemoryBenchmarking::getInstance().getTotalMemoryAllocated() - totalMemoryUsage) /
+                1000;
         } else {
             std::cout << "The number of graphs is 0 or is not equal to the number of start nodes, aborting.."
                       << std::endl;
@@ -69,13 +71,17 @@ template <typename T, typename K> class SSSP : public Task {
     /// @return All distances vector
     const std::vector<std::vector<T>> &getDistances() const noexcept { return distances; }
 
+    /// @brief Getter of SSSP memory usage
+    /// @return All task's memory usage
+    const double &getTaskMemoryBenchmark() const noexcept { return totalMemoryUsage; }
+
+    /// @brief Getter of SSSP algorithm's memory usage
+    /// @return All algorithm's memory benchmarks
+    const std::vector<double> &getAlgorithmMemoryBenchmarks() const noexcept { return memoryBenchmarks; }
+
     /// @brief Getter of SSSP time benchmarks
     /// @return All time benchmarks
     const std::vector<double> &getTimeBenchmarks() const noexcept { return timeBenchmarks; }
-
-    /// @brief Getter of SSSP memory benchmarks
-    /// @return All memory benchmarks
-    const std::vector<size_t> &getMemoryBenchmarks() const noexcept { return memoryBenchmarks; }
 
     /// @brief Getter of SSSP graphs
     /// @return All graphs vector
@@ -92,7 +98,9 @@ template <typename T, typename K> class SSSP : public Task {
             memoryBenchmarks[i] = MemoryBenchmarking::getInstance().getTotalMemoryAllocated();
             timeBenchmarks[i] = static_cast<double>(getTimeInMs());
             algorithm(startNodeIndexes[i], graphs[i], distances[i]);
-            memoryBenchmarks[i] = static_cast<double>(MemoryBenchmarking::getInstance().getTotalMemoryAllocated() - memoryBenchmarks[i]) / 1000;
+            memoryBenchmarks[i] =
+                static_cast<double>(MemoryBenchmarking::getInstance().getTotalMemoryAllocated() - memoryBenchmarks[i]) /
+                1000;
             totalMemoryUsage += memoryBenchmarks[i];
             timeBenchmarks[i] = (static_cast<double>(getTimeInMs()) - timeBenchmarks[i]);
             for (size_t j = 0; j < graphs[i]->getSize(); j++) {
