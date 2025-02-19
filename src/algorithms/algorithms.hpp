@@ -3,6 +3,7 @@
 
 #include <chrono>
 #include <queue>
+#include <deque>
 
 #include "../graph/graph.hpp"
 
@@ -100,18 +101,50 @@ template <typename T, typename K> void BFS(size_t startIndex, GeneralGraph<T, K>
     while (!horizon.empty()) {
         size_t nodeIndex = horizon.front();
         horizon.pop();
-        std::cout << nodeIndex << std::endl;
         const GeneralNode<T> *node = graph->getNode(nodeIndex);
 
         for (const std::pair<GeneralNode<T> *, size_t> &node_and_index : node->getNeighbours()) {
-            std::cout << node_and_index.first->getIndex() << std::endl;
             if (distances[node_and_index.first->getIndex()] == inf) {
                 distances[node_and_index.first->getIndex()] =
                     distances[nodeIndex] + graph->getEdge(node_and_index.second)->getWeight();
                 horizon.push(node_and_index.first->getIndex());
             }
         }
-        std::cout << "====" << std::endl;
+    }
+}
+
+/// @brief BFS algorithm for SSSP with zero edges
+/// @tparam T type for graph's weights and distances
+/// @param startIndex start index for the SSSP
+/// @param graph graph itself
+/// @param distances vector of distances from start point to all others
+template <typename T, typename K> void BFS_WithZeroEdges(size_t startIndex, GeneralGraph<T, K> *graph, std::vector<T> &distances) {
+    const auto size = graph->getSize();
+
+    distances.resize(size);
+    std::fill(distances.begin(), distances.end(), inf);
+    std::deque<size_t> horizon;
+
+    distances[startIndex] = 0;
+    horizon.push_back(startIndex);
+    while (!horizon.empty()) {
+        size_t nodeIndex = horizon.front();
+        horizon.pop_front();
+        const GeneralNode<T> *node = graph->getNode(nodeIndex);
+
+        for (const std::pair<GeneralNode<T> *, size_t> &node_and_index : node->getNeighbours()) {
+            if (distances[node_and_index.first->getIndex()] == inf) {
+                T weight = graph->getEdge(node_and_index.second)->getWeight();
+                distances[node_and_index.first->getIndex()] =
+                    distances[nodeIndex] + weight;
+
+                if (weight == 0) {
+                    horizon.push_front(node_and_index.first->getIndex());
+                } else {
+                    horizon.push_back(node_and_index.first->getIndex());
+                }
+            }
+        }
     }
 }
 
