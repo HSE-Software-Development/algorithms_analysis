@@ -1,0 +1,10 @@
+#.cache/*
+.git/*
+.github/*
+.vscode/*
+src/.build/*
+src/cmake-build-debug/*
+*/build/*
+*/.build/*
+build/*
+.build/*

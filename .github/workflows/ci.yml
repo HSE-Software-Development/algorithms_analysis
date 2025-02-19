@@ -1,0 +1,23 @@
+name: Build project
+
+on: [push]
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Installing cmake...
+        run: sudo apt install cmake
+      - name: Building...
+        run: |
+          cd src
+          mkdir .build && cd .build
+          cmake ..
+          make -j
+      - name: Testing...
+        run: |
+          cd src/.build
+          ./HSE_SD_tests
+
+      
