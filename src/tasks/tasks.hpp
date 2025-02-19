@@ -80,10 +80,9 @@ template <typename T, typename K> class SSSP : public Task {
             benchmarks[i] = (static_cast<double>(getTimeInMs()) - benchmarks[i]);
             for (size_t j = 0; j < graphs[i]->getSize(); j++) {
                 std::cout << "\t" << j + 1 << ") Distanse from node #" << startNodeIndexes[i] << " to node #" << j
-                          << " = " << distances[i][j] << "; "
-                          << "time = " << benchmarks[i] << " sec\n";
+                          << " = " << distances[i][j] << ";\n";
             }
-            std::cout << std::endl;
+            std::cout << "\t\tTime: " << benchmarks[i] << " ms." << std::endl;
         }
     }
 
