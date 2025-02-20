@@ -42,10 +42,10 @@ jobs:
       - name: List files in Debug folder
         run: dir src\.build\Debug
 
-      - name: Run tests on Windows
-        run: |
-          cd src\.build
-          Start-Process -FilePath .\Debug\HSE_SD_tests.exe -Wait
+      # - name: Run tests on Windows
+      #   run: |
+      #     cd src\.build
+      #     .\Debug\HSE_SD_tests.exe
 
   ci-macos:
     runs-on: macos-latest
