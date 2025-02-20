@@ -36,6 +36,11 @@ jobs:
           mkdir .build && cd .build
           cmake -DCMAKE_BUILD_TYPE=Debug ..
           cmake --build . --config Debug -- /m
+      - name: Debug Windows build output
+        run: dir src\.build
+                
+      - name: List files in Debug folder
+        run: dir src\.build\Debug
 
       - name: Run tests on Windows
         run: |
