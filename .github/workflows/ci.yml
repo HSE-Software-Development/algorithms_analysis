@@ -45,7 +45,7 @@ jobs:
       - name: Run tests on Windows
         run: |
           cd src\.build
-          .\Debug\HSE_SD_tests.exe
+          Start-Process -FilePath .\Debug\HSE_SD_tests.exe -Wait
 
   ci-macos:
     runs-on: macos-latest
