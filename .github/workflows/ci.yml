@@ -21,7 +21,7 @@ jobs:
       - name: Run tests on Ubuntu
         run: |
           cd src/.build
-          export ASAN_OPTIONS=detect_odr_violation=0
+          export ASAN_OPTIONS="alloc_dealloc_mismatch=0"
           ./HSE_SD_tests
 
   ci-windows:
