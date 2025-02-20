@@ -34,8 +34,8 @@ jobs:
         run: |
           cd src
           mkdir .build && cd .build
-          cmake ..
-          cmake --build . --config Release -- /m
+          cmake -DCMAKE_BUILD_TYPE=Debug ..
+          cmake --build . --config Debug -- /m
 
       - name: Run tests on Windows
         run: |
