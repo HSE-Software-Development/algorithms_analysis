@@ -40,7 +40,7 @@ jobs:
       - name: Run tests on Windows
         run: |
           cd src\.build
-          .\Release\HSE_SD_tests.exe
+          .\Debug\HSE_SD_tests.exe
 
   ci-macos:
     runs-on: macos-latest
