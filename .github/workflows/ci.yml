@@ -12,16 +12,17 @@ jobs:
       ASAN_OPTIONS: alloc_dealloc_mismatch=0
     steps:
       - uses: actions/checkout@v4
+      
       - name: Install dependencies on Ubuntu
-        if: matrix.os == 'ubuntu-latest'
+        if: runner.os == 'Linux'
         run: sudo apt update && sudo apt install cmake -y
         
       - name: Install dependencies on Windows
-        if: matrix.os == 'windows-latest'
+        if: runner.os == 'Windows'
         run: choco install cmake --installargs 'ADD_CMAKE_TO_PATH=System' --yes
       
       - name: Install dependencies on macOS
-        if: matrix.os == 'macos-latest'
+        if: runner.os == 'macOS'
         run: brew install cmake
 
       - name: Build the project
@@ -29,18 +30,20 @@ jobs:
           cd src
           mkdir .build && cd .build
           cmake ..
-          ${{ if eq(matrix.os, 'windows-latest') }}: |
+          if [ "${{ runner.os }}" == "Windows" ]; then
             set ASAN_OPTIONS=detect_odr_violation=0
             cmake --build . --config Release -- /m
-          ${{ else }}: |
+          else
             make -j
+          fi
 
       - name: Run tests
         run: |
           cd src/.build
-          ${{ if eq(matrix.os, 'windows-latest') }}: |
+          if [ "${{ runner.os }}" == "Windows" ]; then
             set ASAN_OPTIONS=detect_odr_violation=0
             .\Release\HSE_SD_tests.exe
-          ${{ else }}: |
+          else
             export ASAN_OPTIONS=detect_odr_violation=0
             ./HSE_SD_tests
+          fi
