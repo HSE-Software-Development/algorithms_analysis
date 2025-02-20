@@ -1,49 +1,72 @@
 name: Build project
-
 on: [push]
-
 jobs:
-  ci:
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
+  ci-linux:
+    runs-on: ubuntu-latest
     env:
       ASAN_OPTIONS: alloc_dealloc_mismatch=0
     steps:
       - uses: actions/checkout@v4
       
       - name: Install dependencies on Ubuntu
-        if: runner.os == 'Linux'
         run: sudo apt update && sudo apt install cmake -y
-        
-      - name: Install dependencies on Windows
-        if: runner.os == 'Windows'
-        run: choco install cmake --installargs 'ADD_CMAKE_TO_PATH=System' --yes
-      
-      - name: Install dependencies on macOS
-        if: runner.os == 'macOS'
-        run: brew install cmake
 
-      - name: Build the project
+      - name: Build the project on Ubuntu
         run: |
           cd src
           mkdir .build && cd .build
           cmake ..
-          if [ "${{ runner.os }}" == "Windows" ]; then
-            set ASAN_OPTIONS=detect_odr_violation=0
-            cmake --build . --config Release -- /m
-          else
-            make -j
-          fi
+          make -j
 
-      - name: Run tests
+      - name: Run tests on Ubuntu
         run: |
           cd src/.build
-          if [ "${{ runner.os }}" == "Windows" ]; then
-            set ASAN_OPTIONS=detect_odr_violation=0
-            .\Release\HSE_SD_tests.exe
-          else
-            export ASAN_OPTIONS=detect_odr_violation=0
-            ./HSE_SD_tests
-          fi
+          export ASAN_OPTIONS=detect_odr_violation=0
+          ./HSE_SD_tests
+
+  ci-windows:
+    runs-on: windows-latest
+    env:
+      ASAN_OPTIONS: alloc_dealloc_mismatch=0
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Install dependencies on Windows
+        run: choco install cmake --installargs 'ADD_CMAKE_TO_PATH=System' --yes
+
+      - name: Build the project on Windows
+        run: |
+          cd src
+          mkdir .build && cd .build
+          cmake ..
+          set ASAN_OPTIONS=detect_odr_violation=0
+          cmake --build . --config Release -- /m
+
+      - name: Run tests on Windows
+        run: |
+          cd src\.build
+          set ASAN_OPTIONS=detect_odr_violation=0
+          .\Release\HSE_SD_tests.exe
+
+  ci-macos:
+    runs-on: macos-latest
+    env:
+      ASAN_OPTIONS: alloc_dealloc_mismatch=0
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Install dependencies on macOS
+        run: brew install cmake
+
+      - name: Build the project on macOS
+        run: |
+          cd src
+          mkdir .build && cd .build
+          cmake ..
+          make -j
+
+      - name: Run tests on macOS
+        run: |
+          cd src/.build
+          export ASAN_OPTIONS=detect_odr_violation=0
+          ./HSE_SD_tests
