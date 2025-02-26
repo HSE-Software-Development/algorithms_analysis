@@ -37,12 +37,6 @@ else()
   message(STATUS "Not building Google tests")
 endif()
 
-if(BUILD_EXAMPLES)
-  message(STATUS "Building examples")
-else()
-  message(STATUS "Not building examples")
-endif()
-
 if(BUILD_MICRO_BENCHMARKS)
   message(STATUS "Building C++ micro benchmarks")
 else()

@@ -14,27 +14,24 @@
  * limitations under the License.
  */
 
-#include "../tests.hpp"
+#include <gtest/gtest.h>
+#include <algo_analysis/algorithms/bfs.hpp>
+#include <algo_analysis/task.hpp>
+#include <algo_analysis/graphs/edges_list_graph.hpp>
+#include <algo_analysis/graphs/edge.hpp>
+
 
 // Demonstrate some basic assertions.
-TEST(BFS, Graph1) {
-  std::unique_ptr<Graph> graph_1 =
-      std::make_unique<Graph>("../tests/.data/graph_example_4.txt");
+TEST(BFS, Task01) {
 
-  FunctionType<int, int>::Type f = algorithms::BFS<int, int>;
+    Task<int> task(
+        "../tests/.data/task_01.txt"
+    );
+    BFSAlgorithm<int> bfs;
+    auto results = task.run(bfs);
+    std::vector<std::vector<int>> expectedResult = {
+        {0, 10, 10, 20},
+    };
 
-  std::vector<Graph *> graphs;
-
-  graphs.push_back(graph_1.get());
-  SSSP<int, int> task(graphs, {0}, f);
-
-  task.run();
-
-  std::vector<std::vector<int>> right_distances = {{0, 10, 20, 40, 80}};
-
-  for (int i = 0; i < task.getDistances().size(); i++) {
-    for (int j = 0; j < task.getDistances()[i].size(); j++) {
-      EXPECT_EQ(task.getDistances()[i][j], right_distances[i][j]);
-    }
-  }
+    EXPECT_EQ(results, expectedResult);
 }

@@ -44,7 +44,5 @@ function(add_benchmark test_name test_src)
   add_dependencies(micro_benchmarks ${test_name})
 endfunction()
 
-add_benchmark(FordBellmanBenchmark ford_bellman.cpp)
 add_benchmark(DFSBenchmark dfs.cpp)
 add_benchmark(BFSBenchmark bfs.cpp)
-add_benchmark(DijkstraBenchmark dijkstra.cpp)

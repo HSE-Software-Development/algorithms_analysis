@@ -26,7 +26,7 @@ FetchContent_MakeAvailable(googletest)
 
 include_directories(SYSTEM ${ALGO_ANALYSIS_INCLUDE_DIR})
 
-file(GLOB TEST_SOURCES "algorithms/*.cpp" "graphs/*.cpp")
+file(GLOB TEST_SOURCES "algorithms/*.cpp" "graphs/*.cpp" "task/*.cpp")
 
 add_executable(${PROJECT_NAME}_tests ${PROJECT_SOURCES} ${TEST_SOURCES})
 

@@ -14,35 +14,22 @@
  * limitations under the License.
  */
 
-#include <algo_analysis/task/task.hpp>
 #include <benchmark/benchmark.h>
+#include <algo_analysis/algorithms/dfs.hpp>
+#include <algo_analysis/task.hpp>
+#include <algo_analysis/graphs/edges_list_graph.hpp>
+#include <algo_analysis/graphs/edge.hpp>
 #include <iostream>
 
+
 void pointQuery(int maxCapacity) {
-  std::unique_ptr<Graph> graph_1 =
-      std::make_unique<Graph>("../micro_benchmarks/.data/graph_example_1.txt");
-  std::unique_ptr<Graph> graph_2 =
-      std::make_unique<Graph>("../micro_benchmarks/.data/graph_example_2.txt");
-  std::unique_ptr<Graph> graph_3 =
-      std::make_unique<Graph>("../micro_benchmarks/.data/graph_example_3.txt");
-  std::unique_ptr<Graph> graph_4 =
-      std::make_unique<Graph>("../micro_benchmarks/.data/graph_example_4.txt");
-  std::unique_ptr<Graph> graph_5 =
-      std::make_unique<Graph>("../micro_benchmarks/.data/graph_example_10.txt");
+    Task<int> task(
+        "../tests/.data/task_01.txt"
+    );
 
-  SSSP<int, int>::AlgorithmType algorithm = algorithms::DFS<int, int>;
+    DFSAlgorithm<int> dfs;
 
-  std::vector<size_t> startNodesIndexes(5, 0);
-  std::vector<Graph *> graphs;
-  graphs.push_back(graph_1.get());
-  graphs.push_back(graph_2.get());
-  graphs.push_back(graph_3.get());
-  graphs.push_back(graph_4.get());
-  graphs.push_back(graph_5.get());
-
-  SSSP<int, int> task(graphs, startNodesIndexes, algorithm);
-
-  task.run();
+    task.run(dfs);
 }
 
 void benchMark(benchmark::State &state) {
@@ -62,4 +49,8 @@ int main(int argc, char **argv) {
   ::benchmark::RunSpecifiedBenchmarks();
 
   return 0;
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> b9df142 (Second day, second life)
