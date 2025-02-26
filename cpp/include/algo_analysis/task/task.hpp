@@ -44,12 +44,13 @@ public:
 // SSSP task class
 template <typename T, typename K> class SSSP : public Task {
 public:
-    typedef std::function<void(size_t, GeneralGraph<T, K> *, std::vector<T> &)> AlgorithmType;
+  typedef std::function<void(size_t, GeneralGraph<T, K> *, std::vector<T> &)>
+      AlgorithmType;
 
 private:
   std::vector<size_t> startNodeIndexes; // Start node index for the task
   std::vector<GeneralGraph<T, K> *>
-      graphs;                // Non-owning pointer to the graphs for the task
+      graphs;              // Non-owning pointer to the graphs for the task
   AlgorithmType algorithm; // Algorithm for the task
   std::vector<std::vector<T>>
       distances; // Distances from the start node to all others
@@ -137,10 +138,10 @@ public:
       std::cout << "SSSP for graph #" << i + 1 << ":\n";
       if (graphs[i] == nullptr) {
         std::cout << "\tGraph pointer is nullptr, aborting..." << std::endl;
-        return;
+        continue;
       } else if (graphs[i]->getSize() == 0) {
         std::cout << "\tGraph is empty, skpping..." << std::endl;
-        return;
+        continue;
       }
 
       memoryBenchmarks[i] =

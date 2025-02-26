@@ -20,7 +20,7 @@
 int main() {
   std::unique_ptr<Graph> graph_1 =
       std::make_unique<Graph>("../.data/graph_example_10.txt");
-  SSSP<int, int>::Algorithm::Type algorithm = algorithms::FordBellman<int, int>;
+  SSSP<int, int>::AlgorithmType algorithm = algorithms::FordBellman<int, int>;
 
   std::vector<Graph *> graphs;
 

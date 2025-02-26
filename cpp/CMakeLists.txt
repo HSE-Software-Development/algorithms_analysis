@@ -25,10 +25,11 @@ project(${PROJECT_NAME} LANGUAGES CXX)
 
 option(BUILD_TESTS "Build Google tests" ON)
 option(BUILD_EXAMPLES "Build examples" ON)
-option(BUILD_MICRO_BENCHMARKS "Build C++ micro benchmarks" OFF)
+option(BUILD_MICRO_BENCHMARKS "Build C++ micro benchmarks" ON)
 option(WARNING_IS_ERROR "Treat all warnings as errors" ON)
 
-include_directories(SYSTEM ${PROJECT_SOURCE_DIR}/include)
+set_ifndef(ALGO_ANALYSIS_DIR "${CMAKE_CURRENT_SOURCE_DIR}/..")
+set_ifndef(ALGO_ANALYSIS_INCLUDE_DIR ${ALGO_ANALYSIS_DIR}/cpp/include)
 
 if(BUILD_TESTS)
   message(STATUS "Building Google tests")
