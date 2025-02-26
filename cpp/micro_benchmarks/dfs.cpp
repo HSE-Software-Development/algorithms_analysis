@@ -49,8 +49,4 @@ int main(int argc, char **argv) {
   ::benchmark::RunSpecifiedBenchmarks();
 
   return 0;
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> b9df142 (Second day, second life)
