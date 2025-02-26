@@ -44,19 +44,13 @@ public:
 // SSSP task class
 template <typename T, typename K> class SSSP : public Task {
 public:
-  /// @brief Struct for algorithm function type shortcut
-  /// @tparam T nodes' weights type
-  /// @tparam K edges' weight type
-  struct Algorithm {
-    typedef std::function<void(size_t, GeneralGraph<T, K> *, std::vector<T> &)>
-        Type; // Type itself
-  };
+    typedef std::function<void(size_t, GeneralGraph<T, K> *, std::vector<T> &)> AlgorithmType;
 
 private:
   std::vector<size_t> startNodeIndexes; // Start node index for the task
   std::vector<GeneralGraph<T, K> *>
       graphs;                // Non-owning pointer to the graphs for the task
-  Algorithm::Type algorithm; // Algorithm for the task
+  AlgorithmType algorithm; // Algorithm for the task
   std::vector<std::vector<T>>
       distances; // Distances from the start node to all others
   std::vector<double> timeBenchmarks; // Algorithm executions time in seconds
