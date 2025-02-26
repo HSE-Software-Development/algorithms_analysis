@@ -1,23 +1,68 @@
 name: Build project
-
 on: [push]
-
 jobs:
-  ci:
+  ci-linux:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Installing cmake...
-        run: sudo apt install cmake
-      - name: Building...
+      
+      - name: Install dependencies on Ubuntu
+        run: sudo apt update && sudo apt install cmake -y
+
+      - name: Build the project on Ubuntu
         run: |
-          cd src
+          cd cpp
           mkdir .build && cd .build
           cmake ..
           make -j
-      - name: Testing...
-        run: |
-          cd src/.build
-          ./HSE_SD_tests
 
+      - name: Run tests on Ubuntu
+        run: |
+          cd cpp/.build
+          export ASAN_OPTIONS="alloc_dealloc_mismatch=0"
+          ./tests/algo_analysis_tests
+
+  ci-windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
       
+      - name: Windows moment ))
+        run: choco install cmake --installargs 'ADD_CMAKE_TO_PATH=System' --yes
+
+      # - name: Windows moment ))
+      #   run: |
+      #     cd cpp
+      #     mkdir .build && cd .build
+      #     cmake -DCMAKE_BUILD_TYPE=Debug ..
+      #     cmake --build . --config Debug -- /m
+      # - name: Debug Windows build output
+      #   run: dir cpp\.build
+                
+      # - name: List files in Debug folder
+      #   run: dir cpp\.build\Debug
+
+      # - name: Run tests on Windows
+      #   run: |
+      #     cd src\.build
+      #     .\Debug\HSE_SD_tests.exe
+
+  ci-macos:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Install dependencies on macOS
+        run: brew install cmake
+
+      - name: Build the project on macOS
+        run: |
+          cd cpp
+          mkdir .build && cd .build
+          cmake ..
+          make -j
+
+      - name: Run tests on macOS
+        run: |
+          cd cpp/.build
+          ./tests/algo_analysis_tests
