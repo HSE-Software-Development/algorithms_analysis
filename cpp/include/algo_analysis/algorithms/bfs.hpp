@@ -35,7 +35,7 @@ struct BFSAlgorithm : public Algorithm<WeightType> {
     std::vector<WeightType> distances;
     Graph graph;
 
-    DFSAlgorithm() {
+    BFSAlgorithm() {
 
     }
     
