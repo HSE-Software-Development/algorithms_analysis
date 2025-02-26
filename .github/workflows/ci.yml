@@ -11,16 +11,16 @@ jobs:
 
       - name: Build the project on Ubuntu
         run: |
-          cd src
+          cd cpp
           mkdir .build && cd .build
           cmake ..
           make -j
 
       - name: Run tests on Ubuntu
         run: |
-          cd src/.build
+          cd cpp/.build
           export ASAN_OPTIONS="alloc_dealloc_mismatch=0"
-          ./HSE_SD_tests
+          ./tests/algo_analysis_tests
 
   ci-windows:
     runs-on: windows-latest
@@ -32,15 +32,15 @@ jobs:
 
       - name: Build the project on Windows
         run: |
-          cd src
+          cd cpp
           mkdir .build && cd .build
           cmake -DCMAKE_BUILD_TYPE=Debug ..
           cmake --build . --config Debug -- /m
       - name: Debug Windows build output
-        run: dir src\.build
+        run: dir cpp\.build
                 
       - name: List files in Debug folder
-        run: dir src\.build\Debug
+        run: dir cpp\.build\Debug
 
       # - name: Run tests on Windows
       #   run: |
@@ -57,12 +57,12 @@ jobs:
 
       - name: Build the project on macOS
         run: |
-          cd src
+          cd cpp
           mkdir .build && cd .build
           cmake ..
           make -j
 
       - name: Run tests on macOS
         run: |
-          cd src/.build
-          ./HSE_SD_tests
+          cd cpp/.build
+          ./tests/algo_analysis_tests
