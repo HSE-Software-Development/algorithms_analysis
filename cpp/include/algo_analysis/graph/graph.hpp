@@ -177,8 +177,9 @@ public:
         std::cout << e.what();
       }
     } else {
-      std::cout << "Graph file is not found: " << filePath << ", aborting.."
-                << std::endl;
+      std::cout << "Graph file is not found by path: " << filePath << std::endl;
+      nodes.clear();
+      edges.clear();
     }
     stream.close();
   }

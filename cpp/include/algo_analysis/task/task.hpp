@@ -43,12 +43,20 @@ public:
 
 // SSSP task class
 template <typename T, typename K> class SSSP : public Task {
+public:
+  /// @brief Struct for algorithm function type shortcut
+  /// @tparam T nodes' weights type
+  /// @tparam K edges' weight type
+  struct Algorithm {
+    typedef std::function<void(size_t, GeneralGraph<T, K> *, std::vector<T> &)>
+        Type; // Type itself
+  };
+
 private:
   std::vector<size_t> startNodeIndexes; // Start node index for the task
   std::vector<GeneralGraph<T, K> *>
-      graphs; // Non-owning pointer to the graphs for the task
-  std::function<void(size_t, GeneralGraph<T, K> *, std::vector<T> &)>
-      algorithm; // Algorithm for the task
+      graphs;                // Non-owning pointer to the graphs for the task
+  Algorithm::Type algorithm; // Algorithm for the task
   std::vector<std::vector<T>>
       distances; // Distances from the start node to all others
   std::vector<double> timeBenchmarks; // Algorithm executions time in seconds
@@ -129,11 +137,18 @@ public:
   /// @brief Executor of the task
   /// @param logLevel logging level
   void run(int logLevel = 1) override {
-    // TODO
     const auto size = graphs.size();
 
     for (size_t i = 0; i < size; i++) {
       std::cout << "SSSP for graph #" << i + 1 << ":\n";
+      if (graphs[i] == nullptr) {
+        std::cout << "\tGraph pointer is nullptr, aborting..." << std::endl;
+        return;
+      } else if (graphs[i]->getSize() == 0) {
+        std::cout << "\tGraph is empty, skpping..." << std::endl;
+        return;
+      }
+
       memoryBenchmarks[i] =
           MemoryBenchmarking::getInstance().getTotalMemoryAllocated();
       timeBenchmarks[i] = static_cast<double>(getTimeInMs());
