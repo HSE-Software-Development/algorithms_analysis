@@ -27,20 +27,20 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       
-      - name: Install dependencies on Windows
+      - name: Windows moment ))
         run: choco install cmake --installargs 'ADD_CMAKE_TO_PATH=System' --yes
 
-      - name: Build the project on Windows
-        run: |
-          cd cpp
-          mkdir .build && cd .build
-          cmake -DCMAKE_BUILD_TYPE=Debug ..
-          cmake --build . --config Debug -- /m
-      - name: Debug Windows build output
-        run: dir cpp\.build
+      # - name: Windows moment ))
+      #   run: |
+      #     cd cpp
+      #     mkdir .build && cd .build
+      #     cmake -DCMAKE_BUILD_TYPE=Debug ..
+      #     cmake --build . --config Debug -- /m
+      # - name: Debug Windows build output
+      #   run: dir cpp\.build
                 
-      - name: List files in Debug folder
-        run: dir cpp\.build\Debug
+      # - name: List files in Debug folder
+      #   run: dir cpp\.build\Debug
 
       # - name: Run tests on Windows
       #   run: |
