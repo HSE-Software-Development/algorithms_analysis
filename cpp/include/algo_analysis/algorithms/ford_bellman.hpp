@@ -37,7 +37,7 @@ struct FordBellmanAlgorithm : public Algorithm<WeightType> {
     Graph graph;
     WeightType inf;
 
-    DijkstraAlgorithm() {
+    FordBellmanAlgorithm() {
 
     }
     
