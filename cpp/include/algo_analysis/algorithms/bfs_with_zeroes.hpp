@@ -35,7 +35,7 @@ struct BFSWithZerosAlgorithm : public Algorithm<WeightType> {
     std::vector<WeightType> distances;
     Graph graph;
 
-    BFSWithZeros() {
+    BFSWithZerosAlgorithm() {
     }
     
     void fit(const EdgesListGraph<WeightType> &graph_) override {
