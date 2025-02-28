@@ -7,10 +7,12 @@
 #include <iostream>
 #include <deque>
 
+// Breadth-first search algorithm with zero weights
 template<typename WeightType> 
 struct BFSWithZerosAlgorithm : public Algorithm<WeightType> {
     using Edge = Edge<WeightType>;
 
+    // Graph representation
     struct Graph : public AdjacencyListGraph<WeightType> {
         using BaseClass = AdjacencyListGraph<WeightType>;
 
@@ -32,17 +34,19 @@ struct BFSWithZerosAlgorithm : public Algorithm<WeightType> {
     };
 
     
-    std::vector<WeightType> distances;
+    std::vector<WeightType> distances; // Distances from the start node
     Graph graph;
 
     BFSWithZerosAlgorithm() {
     }
     
+    // Fit the algorithm to the graph
     void fit(const EdgesListGraph<WeightType> &graph_) override {
         graph = Graph(graph_.edges);
         distances = std::vector<WeightType>(graph.neighbors.size());
     }
 
+    // Compute distances from the start node
     std::vector<WeightType> computeDistances(size_t startIndex) override {
         std::deque<size_t> hor;
         hor.push_back(startIndex);

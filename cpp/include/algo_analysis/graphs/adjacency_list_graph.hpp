@@ -5,6 +5,7 @@
 #include <unordered_set>
 
 
+// Graph representation with adjacency list
 template<typename WeightType>
 struct AdjacencyListGraph {
     using Edge = Edge<WeightType>;

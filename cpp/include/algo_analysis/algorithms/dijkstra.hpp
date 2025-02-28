@@ -7,10 +7,12 @@
 #include <iostream>
 #include <queue>
 
+// Dijkstra's algorithm
 template<typename WeightType> 
 struct DijkstraAlgorithm : public Algorithm<WeightType> {
     using Edge = Edge<WeightType>;
 
+    // Graph representation
     struct Graph : public AdjacencyListGraph<WeightType> {
         using BaseClass = AdjacencyListGraph<WeightType>;
 
@@ -32,7 +34,7 @@ struct DijkstraAlgorithm : public Algorithm<WeightType> {
     };
 
     
-    std::vector<WeightType> distances;
+    std::vector<WeightType> distances; // Distances from the start node
     Graph graph;
 
     DijkstraAlgorithm() {
@@ -41,6 +43,7 @@ struct DijkstraAlgorithm : public Algorithm<WeightType> {
 
     WeightType inf;
     
+    // Fit the algorithm to the graph
     void fit(const EdgesListGraph<WeightType> &graph_) override {
         graph = Graph(graph_.edges);
         inf = 1;
@@ -49,6 +52,7 @@ struct DijkstraAlgorithm : public Algorithm<WeightType> {
         }
     }
 
+    // Compute distances from the start node
     std::vector<WeightType> computeDistances(size_t startIndex) override {
         distances = std::vector<WeightType>(graph.neighbors.size(), inf);
         distances[startIndex] = 0;

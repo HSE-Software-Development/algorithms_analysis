@@ -29,6 +29,7 @@
 #include <algo_analysis/graphs/edges_list_graph.hpp>
 #include <algo_analysis/memory/memory.hpp>
 
+// Task for the algorithm
 template<typename WeightType>
 struct Task{
 
@@ -41,7 +42,7 @@ struct Task{
     EdgesListGraph<WeightType> graph;
     std::vector<size_t> startIndexes;
 
-
+    // Statistics for the task
     struct Statistics {
         size_t initializationMemoryUsage;
         std::vector<size_t> computationMemoryUsage;
@@ -58,6 +59,7 @@ struct Task{
     }
 
 
+    // Serialize the task
     void serialize(std::ostream &stream) {
         graph.serialize(stream);
 
@@ -67,6 +69,7 @@ struct Task{
         }
     } 
 
+    // Deserialize the task
     void deserialize(std::istream &stream) {
         graph.deserialize(stream);
 
@@ -79,11 +82,13 @@ struct Task{
         }
     }
 
+    // Save the task to the file
     void toFile(std::string &filePath) {
         std::ofstream file(filePath);
         serialize(file);
     }
 
+    // Load the task from the file
     void fromFile(const std::string &filePath) {
         std::ifstream file(filePath);
         if (!file.is_open()) {
@@ -93,6 +98,7 @@ struct Task{
         deserialize(file);
     }
 
+    // Run the algorithm
     std::vector<std::vector<WeightType>> run(Algorithm<WeightType> &algorithm) {
         std::vector<std::vector<WeightType>> result;
         algorithm.fit(graph);
@@ -102,6 +108,7 @@ struct Task{
         return result;
     }
 
+    // Estimate the algorithm
     Statistics estimate(Algorithm<WeightType> &algorithm) {
         Statistics stats;
 

@@ -6,9 +6,11 @@
 #include <algo_analysis/graphs/adjacency_list_graph.hpp>
 #include <iostream>
 
+// Depth-first search algorithm
 template<typename WeightType> 
 struct DFSAlgorithm : public Algorithm<WeightType> {
 
+    // Graph representation
     struct Graph : public AdjacencyListGraph<WeightType> {
         using BaseClass = AdjacencyListGraph<WeightType>;
 
@@ -30,18 +32,20 @@ struct DFSAlgorithm : public Algorithm<WeightType> {
     };
 
     
-    std::vector<WeightType> distances;
+    std::vector<WeightType> distances; // Distances from the start node
     Graph graph;
 
     DFSAlgorithm() {
 
     }
     
+    // Fit the algorithm to the graph
     void fit(const EdgesListGraph<WeightType> &graph_) override {
         graph = Graph(graph_.edges);
     }
 
 
+    // Compute distances from the start node
     void dfs(size_t v) {
         for (const Edge<WeightType> &edge : graph.neighbors[v]) {
             size_t u = edge.toIndex;
@@ -53,6 +57,7 @@ struct DFSAlgorithm : public Algorithm<WeightType> {
         }
     }
 
+    // Compute distances from the start node
     std::vector<WeightType> computeDistances(size_t startIndex) override {
         distances = std::vector<WeightType>(graph.neighbors.size(), -1);
         for (auto &node : graph.nodes) {

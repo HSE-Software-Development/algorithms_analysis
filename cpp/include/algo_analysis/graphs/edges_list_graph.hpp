@@ -5,6 +5,7 @@
 #include <iostream>
 
 
+// Graph representation with edges list
 template<typename WeightType>
 struct EdgesListGraph {
     std::vector<Edge<WeightType>> edges;

@@ -7,10 +7,12 @@
 #include <iostream>
 #include <queue>
 
+// Breadth-first search algorithm
 template<typename WeightType> 
 struct BFSAlgorithm : public Algorithm<WeightType> {
     using Edge = Edge<WeightType>;
 
+    // Graph representation
     struct Graph : public AdjacencyListGraph<WeightType> {
         using BaseClass = AdjacencyListGraph<WeightType>;
 
@@ -32,17 +34,19 @@ struct BFSAlgorithm : public Algorithm<WeightType> {
     };
 
     
-    std::vector<WeightType> distances;
+    std::vector<WeightType> distances; // Distances from the start node
     Graph graph;
 
     BFSAlgorithm() {
 
     }
     
+    // Fit the algorithm to the graph
     void fit(const EdgesListGraph<WeightType> &graph_) override {
         graph = Graph(graph_.edges);
     }
 
+    // Compute distances from the start node
     std::vector<WeightType> computeDistances(size_t startIndex) override {
         distances = std::vector<WeightType>(graph.neighbors.size(), -1);
         for (auto &node : graph.nodes) {

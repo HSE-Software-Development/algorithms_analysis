@@ -42,11 +42,6 @@
     ./tests/algo_analysis_tests
 ```
 
-3. **Run the benchmarks:**
-```sh
-    cd cpp/build/micro_benchmarks
-    ./DFSBenchmark # or another algorithm
-```
 
 ### For Windows (MSVC)
 
@@ -55,7 +50,19 @@
 ## Installation and contributing
 [Примеры использования тут](examples/README.md)
 
-Также у вас есть возможность дополнять нашу библиотеку алгоритмов путем их добавления в пространство имен algorithms или же просто как отдельные методы (важно: чтобы этими методами могли оперировать [классы задач](docs/architecture.md) они должны обладать конкретными параметрами в своем определении)
+
+Также у вас есть возможность дополнять нашу библиотеку алгоритмов путем реализации наследников класса `Algorithm` ([см. архитектурную документацию](docs/architecture.md)).
+
+## Using the test environment
+
+Тестовая среда позволяет замерять время и память при инициализации и работе алгоритма. Для этого `Task` предоставляет метод `estimate` ([см. примеры](examples/README.md)). 
+
+Запуск бенчмарков.
+```sh
+    cd cpp/build/micro_benchmarks
+    ./DFSBenchmark # or another algorithm
+```
+
 
 ## License
 
