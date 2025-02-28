@@ -29,4 +29,4 @@ project(${PROJECT_NAME})
 set_ifndef(ALGO_ANALYSIS_INCLUDE_DIR ${ALGO_ANALYSIS_DIR}/cpp/include)
 include_directories(SYSTEM ${ALGO_ANALYSIS_INCLUDE_DIR})
 
-add_executable(ford_bellman_example "${ALGO_ANALYSIS_DIR}/cpp/algo_analysis/memory/memory.cpp" "ford_bellman/ford_bellman.cpp")
+add_executable(ford_bellman_example "${ALGO_ANALYSIS_DIR}/cpp/algo_analysis/memory/memory.cpp" "dfs.cpp")

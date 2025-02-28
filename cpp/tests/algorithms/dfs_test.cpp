@@ -21,7 +21,6 @@
 #include <algo_analysis/graphs/edge.hpp>
 
 
-// Demonstrate some basic assertions.
 TEST(DFS, Task01) {
 
     Task<int> task(
@@ -31,6 +30,64 @@ TEST(DFS, Task01) {
     auto results = task.run(dfs);
     std::vector<std::vector<int>> expectedResult = {
         {0, 10, 10, 20},
+    };
+
+    EXPECT_EQ(results, expectedResult);
+}
+
+TEST(DFS, TaskTree) {
+
+    Task<int> task(
+        "../tests/.data/task_tree.txt"
+    );
+    DFSAlgorithm<int> dfs;
+    auto results = task.run(dfs);
+    std::vector<std::vector<int>> expectedResult = {
+        { 0, 5, 3, 13, 7, 10, 7 }
+    };
+
+    EXPECT_EQ(results, expectedResult);
+}
+
+
+TEST(DFS, TaskFullGraph) {
+
+    Task<int> task(
+        "../tests/.data/task_full_graph.txt"
+    );
+    DFSAlgorithm<int> dfs;
+    auto results = task.run(dfs);
+    std::vector<std::vector<int>> expectedResult = {
+        { 0, 7, 10, 14 }, { -1, 0, 3, 7 }
+    };
+
+    EXPECT_EQ(results, expectedResult);
+}
+
+
+TEST(DFS, TaskSeveralComponents) {
+
+    Task<int> task(
+        "../tests/.data/task_several_components.txt"
+    );
+    DFSAlgorithm<int> dfs;
+    auto results = task.run(dfs);
+    std::vector<std::vector<int>> expectedResult = {
+        { 0, 2, 7, 4, 7, 10, 16, -1, -1, -1 }, { -1, -1, -1, -1, 0, 3, 9, -1, -1, -1 }
+    };
+
+    EXPECT_EQ(results, expectedResult);
+}
+
+TEST(DFS, TaskCycleWithExtraEdges) {
+
+    Task<int> task(
+        "../tests/.data/task_cycle_with_extra_edges.txt"
+    );
+    DFSAlgorithm<int> dfs;
+    auto results = task.run(dfs);
+    std::vector<std::vector<int>> expectedResult = {
+        { 0, 6, 7, 11, 14, 16 }, { 15, 0, 1, 5, 8, 10 }
     };
 
     EXPECT_EQ(results, expectedResult);

@@ -30,7 +30,6 @@ struct EdgesListGraph {
             std::string separator;
             stream >> edges[i].fromIndex >> separator >> edges[i].toIndex >> separator >> edges[i].weight;
         }
-        std::cout << edges.size();
 
     }
 };

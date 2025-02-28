@@ -7,59 +7,46 @@
 ## Структура библиотеки
 
 ### 1. Основные компоненты
+- Task - представляет собой граф в виде списка ребер, а также множество вершин, от которых предстоит найти расстояние до других вершин.
+- Algorithm - базовый класс для алгоритмов. Потомки должны реализовывать две функции fit (подстраивание алгоритма для работы с графом) и computeDistances (поиск расстояний от выделенной вершины)
+- EdgesListGraph и AdjacencyListGraph - представляют собой графы, заданные с помощью списка ребер и списка связности соответственно.
 
-- GeneralGraph: Класс для представления графа.
-  - GeneralNode: Класс для представления вершин.
-  - GeneralEdge: Класс для представления ребер.
-- algorithms: namespace с функциями различных алгоритмов
-  - FordBellman: Реализация алгоритма Форда-Беллмана.
   
 ### 2. Классы, их поля и формат заголовков алгоритмов
 
-#### 2.1 GeneralGraph
+#### 2.1 Algorithm
+```c++
+template<typename WeightType> 
+struct Algorithm {
+    virtual void fit(const EdgesListGraph<WeightType> &graph) = 0;
+    virtual std::vector<WeightType> computeDistances(size_t startIndex) = 0;
+};
 ```
-template<typename T, typename K>
-class GeneralGraph {
-private:
-    std::vector <std::unique_ptr<GeneralEdge<T>>>
-            edges; // All edges of the graph
-    std::vector <std::unique_ptr<GeneralNode<K>>>
-            nodes; // All nodes of the graph
+##### 2.2 AdjacencyListGraph
+```c++
+template<typename WeightType>
+struct AdjacencyListGraph {
+    std::vector<std::vector<Edge>> neighbors;
 
-```
-##### 2.1.1 GeneralNode
-```
-template<typename T>
-class GeneralNode {
-private:
-    std::vector <std::pair<GeneralNode<T> *, size_t>>
-            neighbors; // Node neighbors vector
-    T value; // Value of the node
-    size_t index; // Index of the node
-    size_t capacity; //
-```
-##### 2.1.2 GeneralEdge
-```
-template<typename T>
-class GeneralEdge {
-private:
-    size_t start, end; // Edge's ends
-    T weight;          // Edge's weight
-
+    AdjacencyListGraph(const std::vector<Edge> &edges);
+};
 ```
 
-#### 2.2 
-```
-namespace algorithms {
-/// @brief Ford Bellman algorithm for SSSP
-/// @tparam T type for graph's weights and distances
-/// @param startIndex start index for the SSSP
-/// @param g graph itself
-/// @param distances vector of distances from start point to all others
-template <typename T>
-void FordBellman(size_t startIndex, GeneralGraph<T, size_t> *g,
-                 std::vector<T> &distances);
-}
+
+##### 2.3 EdgesListGraph
+```c++
+template<typename WeightType>
+struct EdgesListGraph {
+    std::vector<Edge<WeightType>> edges;
+
+    EdgesListGraph(const std::vector<Edge<WeightType>> &edges) : edges(edges);
+
+
+    void serialize(std::ostream &stream);
+
+    void deserialize(std::istream &stream);
+};
+
 ```
 
 
@@ -71,43 +58,35 @@ void FordBellman(size_t startIndex, GeneralGraph<T, size_t> *g,
 - Анализ сложности в зависимости от структуры графа.
 
 ### 2. Структура экспериментальной среды
-- Task: Виртуальный класс задачи
-  - SSSP: Наследник Task. Окружение тестирования задачи SSSP на разных алгоритмах
-  - APSP: Наследник Task. Окружение тестирования задачи APSP
+- Task - представляет собой граф в виде списка ребер, а также множество вершин, от которых предстоит найти расстояние до других вершин. Позволяет запускать вычисления алгоритма с помощью команды run, а также запускать вычисления алгоритма со сбором статистики (используемой памяти и времени работы).
 
 #### 2.1 class Task
-```
-class Task {
-  public:
-    /// @brief Run task method
-    virtual void run(int logLevel) = 0;
+```c++
+struct Task{
 
-    /// @brief Class destructor
-    virtual ~Task() = default;
-}; // End of class 'Task'
+    struct Statistics {
+        size_t initializationMemoryUsage;
+        std::vector<size_t> computationMemoryUsage;
+        uint64_t initializationTime;
+        std::vector<uint64_t> computationTime;
+    };
+
+    Task(const std::string &filePath);
+
+    Task(const std::vector<size_t> &startIndexes_, const EdgesListGraph<WeightType> &graph_); 
+
+
+    void toFile(std::string &filePath);
+
+    void fromFile(const std::string &filePath);
+
+    std::vector<std::vector<WeightType>> run(Algorithm<WeightType> &algorithm);
+
+    Statistics estimate(Algorithm<WeightType> &algorithm);
+
+}; 
 ```
 
-##### 2.1.1 class SSSP
-```
-template <typename T, typename K> class SSSP : public Task {
-public:
-    SSSP(const std::vector<GeneralGraph<T, K> *> &graphs_, const std::vector<size_t> &startNodeIndexes_,
-         const std::function<void(size_t, GeneralGraph<T, K> *, std::vector<T> &)> &algorithm_);
-         
-    void run(int logLevel = 1) override;     
-}
-```
-
-##### 2.1.2 class APSP
-```
-template <typename T, typename K> class APSP : public Task {
-public:
-    APSP(const std::vector<GeneralGraph<T, K> *> &graphs_,
-         std::function<void(const GeneralGraph<T, K> *, std::vector<std::vector<T>> &)> algorithm_) {
-         
-    void run(int logLevel = 1) override;     
-}
-```
 
 #### 2.2 Параметры эксперимента
 

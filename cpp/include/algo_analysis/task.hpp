@@ -86,6 +86,10 @@ struct Task{
 
     void fromFile(const std::string &filePath) {
         std::ifstream file(filePath);
+        if (!file.is_open()) {
+            std::cerr << "Ошибка: Не удалось открыть файл " << filePath << std::endl;
+            return;
+        }
         deserialize(file);
     }
 

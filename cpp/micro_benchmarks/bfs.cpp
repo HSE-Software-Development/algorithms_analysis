@@ -24,7 +24,7 @@
 
 void pointQuery(int maxCapacity) {
     Task<int> task(
-        "../tests/.data/task_01.txt"
+        "../micro_benchmarks/.data/task_01.txt"
     );
 
     BFSAlgorithm<int> bfs;

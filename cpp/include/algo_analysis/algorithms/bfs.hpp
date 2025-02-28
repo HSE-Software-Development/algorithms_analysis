@@ -41,10 +41,13 @@ struct BFSAlgorithm : public Algorithm<WeightType> {
     
     void fit(const EdgesListGraph<WeightType> &graph_) override {
         graph = Graph(graph_.edges);
-        distances = std::vector<WeightType>(graph.neighbors.size());
     }
 
     std::vector<WeightType> computeDistances(size_t startIndex) override {
+        distances = std::vector<WeightType>(graph.neighbors.size(), -1);
+        for (auto &node : graph.nodes) {
+            node.isVisited = false;
+        }
         std::queue<size_t> hor;
         hor.push(startIndex);
         distances[startIndex] = 0;

@@ -21,7 +21,6 @@
 #include <algo_analysis/graphs/edge.hpp>
 
 
-// Demonstrate some basic assertions.
 TEST(BFS, Task01) {
 
     Task<int> task(
@@ -31,6 +30,34 @@ TEST(BFS, Task01) {
     auto results = task.run(bfs);
     std::vector<std::vector<int>> expectedResult = {
         {0, 10, 10, 20},
+    };
+
+    EXPECT_EQ(results, expectedResult);
+}
+
+TEST(BFS, TaskTree) {
+
+    Task<int> task(
+        "../tests/.data/task_tree_only_ones.txt"
+    );
+    BFSAlgorithm<int> dfs;
+    auto results = task.run(dfs);
+    std::vector<std::vector<int>> expectedResult = {
+        { 0, 1, 1, 2, 2, 2, 2 }
+    };
+
+    EXPECT_EQ(results, expectedResult);
+}
+
+TEST(BFS, TaskFullGraph) {
+
+    Task<int> task(
+        "../tests/.data/task_full_graph_only_ones.txt"
+    );
+    BFSAlgorithm<int> algo;
+    auto results = task.run(algo);
+    std::vector<std::vector<int>> expectedResult = {
+        { 0, 1, 1, 1 }, { -1, 0, 1, 1 }
     };
 
     EXPECT_EQ(results, expectedResult);

@@ -25,7 +25,7 @@ struct DFSAlgorithm : public Algorithm<WeightType> {
 
         Graph(const std::vector<Edge<WeightType>> &edges): BaseClass(edges)  {
             nodesNumber = BaseClass::neighbors.size();
-            nodes.resize(nodesNumber, {false});
+            nodes = std::vector<Node>(nodesNumber, {false});
         }
     };
 
@@ -39,7 +39,6 @@ struct DFSAlgorithm : public Algorithm<WeightType> {
     
     void fit(const EdgesListGraph<WeightType> &graph_) override {
         graph = Graph(graph_.edges);
-        distances = std::vector<WeightType>(graph.neighbors.size());
     }
 
 
@@ -55,7 +54,12 @@ struct DFSAlgorithm : public Algorithm<WeightType> {
     }
 
     std::vector<WeightType> computeDistances(size_t startIndex) override {
+        distances = std::vector<WeightType>(graph.neighbors.size(), -1);
+        for (auto &node : graph.nodes) {
+            node.isVisited = false;
+        }
         graph.nodes[startIndex].isVisited = true;
+        distances[startIndex] = 0;
         dfs(startIndex);
         return distances;
     }
