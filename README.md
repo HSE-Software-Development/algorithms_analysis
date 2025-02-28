@@ -42,6 +42,12 @@
     ./tests/algo_analysis_tests
 ```
 
+3. **Run the benchmarks:**
+```sh
+    cd cpp/build/micro_benchmarks
+    ./DFSBenchmark # or another algorithm
+```
+
 ### For Windows (MSVC)
 
 До слез
