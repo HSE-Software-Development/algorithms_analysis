@@ -14,6 +14,10 @@
   
 ### 2. Классы, их поля и формат заголовков алгоритмов
 
+#### 2.0 WeightType
+Параметр типа весов ребер в графе. Должен быть одним из: `int`, `long`, `long long`, `float`,  `double`, `long double`
+
+
 #### 2.1 Algorithm
 ```c++
 template<typename WeightType> 
