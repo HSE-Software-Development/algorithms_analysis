@@ -57,7 +57,7 @@
 
 Тестовая среда позволяет замерять время и память при инициализации и работе алгоритма. Для этого `Task` предоставляет метод `estimate` ([см. примеры](examples/README.md)). 
 
-Запуск бенчмарков.
+Запуск бенчмарков ([см. про бенчмарки тут](micro_benchmarks/README.md))
 ```sh
     cd cpp/build/micro_benchmarks
     ./DFSBenchmark # or another algorithm
