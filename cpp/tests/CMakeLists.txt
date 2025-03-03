@@ -24,10 +24,12 @@ FetchContent_Declare(
 set_ifndef(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(googletest)
 
+include(../cmake/boost.cmake)
+
 include_directories(SYSTEM ${ALGO_ANALYSIS_INCLUDE_DIR})
 
 file(GLOB TEST_SOURCES "algorithms/*.cpp" "graphs/*.cpp" "task/*.cpp")
 
 add_executable(${PROJECT_NAME}_tests ${PROJECT_SOURCES} ${TEST_SOURCES})
 
-target_link_libraries(${PROJECT_NAME}_tests gtest gtest_main)
+target_link_libraries(${PROJECT_NAME}_tests gtest gtest_main Boost::heap)

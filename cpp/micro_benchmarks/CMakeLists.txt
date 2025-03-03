@@ -27,6 +27,8 @@ FetchContent_Declare(
   GIT_TAG v1.8.3)
 FetchContent_MakeAvailable(googlebenchmark)
 
+include(../cmake/boost.cmake)
+
 add_custom_target(micro_benchmarks)
 
 include_directories(SYSTEM ${ALGO_ANALYSIS_INCLUDE_DIR})
@@ -36,7 +38,7 @@ set(TOP_LEVEL_DIR "${PROJECT_SOURCE_DIR}/..")
 function(add_benchmark test_name test_src)
   add_executable(${test_name} ${PROJECT_SOURCES} ${test_src})
 
-  target_link_libraries(${test_name} PUBLIC benchmark::benchmark)
+  target_link_libraries(${test_name} PUBLIC benchmark::benchmark Boost::heap)
 
   target_compile_features(${test_name} PRIVATE cxx_std_17)
   target_compile_definitions(${test_name} PUBLIC TOP_LEVEL_DIR="${TOP_LEVEL_DIR}")
@@ -47,4 +49,6 @@ endfunction()
 add_benchmark(DFSBenchmark dfs.cpp)
 add_benchmark(BFSBenchmark bfs.cpp)
 add_benchmark(DijkstraBenchmark dijkstra.cpp)
+add_benchmark(DijkstraWithFibBenchmark dijkstra_with_fib.cpp)
 add_benchmark(FordBellmanBenchmark ford_bellman.cpp)
+add_benchmark(FloidBenchmark floid.cpp)
