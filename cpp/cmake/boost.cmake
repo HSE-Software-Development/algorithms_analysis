@@ -1,4 +1,3 @@
-
 set(BOOST_INCLUDE_LIBRARIES heap)
 set(BOOST_ENABLE_CMAKE ON)
 include(FetchContent)
@@ -9,4 +8,3 @@ FetchContent_Declare(
   DOWNLOAD_NO_EXTRACT FALSE
 )
 FetchContent_MakeAvailable(Boost)
-
