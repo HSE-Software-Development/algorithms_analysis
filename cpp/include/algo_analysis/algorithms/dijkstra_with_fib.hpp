@@ -1,5 +1,5 @@
-#ifndef DIJKSTRA_HPP
-#define DIJKSTRA_HPP
+#ifndef DIJKSTRA_WITH_FIB_HPP
+#define DIJKSTRA_WITH_FIB_HPP
 
 
 #include <algo_analysis/algorithms/algorithm.hpp>
