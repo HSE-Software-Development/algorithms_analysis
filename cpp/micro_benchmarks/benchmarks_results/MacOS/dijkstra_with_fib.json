@@ -1,0 +1,86 @@
+{
+  "context": {
+    "date": "2025-03-03T01:41:22+00:00",
+    "host_name": "d5962e068320",
+    "executable": "./micro_benchmarks/DijkstraWithFibBenchmark",
+    "num_cpus": 16,
+    "mhz_per_cpu": 48,
+    "cpu_scaling_enabled": false,
+    "caches": [
+    ],
+    "load_avg": [0.640137,0.686523,0.703613],
+    "library_build_type": "debug"
+  },
+  "benchmarks": [
+    {
+      "name": "benchMark/1",
+      "family_index": 0,
+      "per_family_instance_index": 0,
+      "run_name": "benchMark/1",
+      "run_type": "iteration",
+      "repetitions": 1,
+      "repetition_index": 0,
+      "threads": 1,
+      "iterations": 1393,
+      "real_time": 1.2728448801150415e+06,
+      "cpu_time": 1.2728250739411341e+06,
+      "time_unit": "ns"
+    },
+    {
+      "name": "benchMark/2",
+      "family_index": 0,
+      "per_family_instance_index": 1,
+      "run_name": "benchMark/2",
+      "run_type": "iteration",
+      "repetitions": 1,
+      "repetition_index": 0,
+      "threads": 1,
+      "iterations": 541,
+      "real_time": 1.3001248465817112e+06,
+      "cpu_time": 1.3000489796672829e+06,
+      "time_unit": "ns"
+    },
+    {
+      "name": "benchMark/3",
+      "family_index": 0,
+      "per_family_instance_index": 2,
+      "run_name": "benchMark/3",
+      "run_type": "iteration",
+      "repetitions": 1,
+      "repetition_index": 0,
+      "threads": 1,
+      "iterations": 540,
+      "real_time": 1.3020578722245300e+06,
+      "cpu_time": 1.3019908907407410e+06,
+      "time_unit": "ns"
+    },
+    {
+      "name": "benchMark/4",
+      "family_index": 0,
+      "per_family_instance_index": 3,
+      "run_name": "benchMark/4",
+      "run_type": "iteration",
+      "repetitions": 1,
+      "repetition_index": 0,
+      "threads": 1,
+      "iterations": 535,
+      "real_time": 1.2960419009364033e+06,
+      "cpu_time": 1.2959945439252341e+06,
+      "time_unit": "ns"
+    },
+    {
+      "name": "benchMark/5",
+      "family_index": 0,
+      "per_family_instance_index": 4,
+      "run_name": "benchMark/5",
+      "run_type": "iteration",
+      "repetitions": 1,
+      "repetition_index": 0,
+      "threads": 1,
+      "iterations": 527,
+      "real_time": 1.3031827172666665e+06,
+      "cpu_time": 1.3030856223908912e+06,
+      "time_unit": "ns"
+    }
+  ]
+}
