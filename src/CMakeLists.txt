@@ -22,10 +22,10 @@ endif ()
 
 
 # for detecting memory leaks
-add_compile_options(-fsanitize=address)
-add_compile_options(-fsanitize=undefined)
-add_link_options(-fsanitize=address)
-add_link_options(-fsanitize=undefined)
+# add_compile_options(-fsanitize=address)
+# add_compile_options(-fsanitize=undefined)
+# add_link_options(-fsanitize=address)
+# add_link_options(-fsanitize=undefined)
 
 include(FetchContent)
 FetchContent_Declare(
