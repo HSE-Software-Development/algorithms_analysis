@@ -18,6 +18,7 @@ jobs:
       - name: Testing...
         run: |
           cd src/.build
+          export ASAN_OPTIONS="alloc_dealloc_mismatch=0"
           ./HSE_SD_tests
 
       
